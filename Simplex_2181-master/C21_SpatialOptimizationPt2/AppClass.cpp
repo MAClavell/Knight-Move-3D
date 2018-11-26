@@ -36,17 +36,24 @@ void Application::InitVariables(void)
 	//Creates Board
 	float squareSize = 1.0f;
 	float xOffset = 4 * squareSize;
+	float zOffset = 2 * squareSize;
 
 	for (uint i = 0; i < 4; i++)
 	{
 		for (uint j = 0; j < 8; j++)
 		{
 			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(j * squareSize - xOffset, 0, i * squareSize);
+			vector3 v3Position = vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset);
 			matrix4 m4Position = glm::translate(v3Position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
 		}
 	}
+
+	//Adds Player Model
+	m_pEntityMngr->AddEntity("KnightMove3D\\TestKnight.obj");
+	vector3 v3Position = vector3(-xOffset, 1.0f, -zOffset);
+	matrix4 m4Position = glm::translate(v3Position) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	m_pEntityMngr->SetModelMatrix(m4Position);
 	
 	//m_pMeshMngr->AddCubeToRenderList(m4Position, vector3(1.0f, 0.0f, 0.0f));
 
