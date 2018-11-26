@@ -4,7 +4,7 @@ void Application::InitVariables(void)
 {
 	//Set the position and target of the camera
 	m_pCameraMngr->SetPositionTargetAndUpward(
-		vector3(0.0f, 50.0f, 140.0f), //Position
+		vector3(0.0f, 10.0f, 10.0f), //Position
 		vector3(0.0f, 0.0f, 0.0f),	//Target
 		AXIS_Y);					//Up
 
@@ -18,20 +18,38 @@ void Application::InitVariables(void)
 	int nSquare = static_cast<int>(std::sqrt(uInstances));
 	m_uObjects = nSquare * nSquare;
 	uint uIndex = -1;
-	for (int i = 0; i < nSquare; i++)
-	{
-		for (int j = 0; j < nSquare; j++)
-		{
-			uIndex++;
-			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(glm::sphericalRand(34.0f));
-			matrix4 m4Position = glm::translate(v3Position);
-			m_pEntityMngr->SetModelMatrix(m4Position);
-			m_pEntityMngr->UsePhysicsSolver(m_bUsingPhysics); //Apply physics to the objects
-		}
-	}
+	//for (int i = 0; i < nSquare; i++)
+	//{
+	//	for (int j = 0; j < nSquare; j++)
+	//	{
+	//		uIndex++;
+	//		m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+	//		vector3 v3Position = vector3(glm::sphericalRand(34.0f));
+	//		matrix4 m4Position = glm::translate(v3Position);
+	//		m_pEntityMngr->SetModelMatrix(m4Position);
+	//		m_pEntityMngr->UsePhysicsSolver(m_bUsingPhysics); //Apply physics to the objects
+	//	}
+	//}
 	m_uOctantLevels = 1;
 	m_pRoot = new Octant(m_uOctantLevels,5);
+
+	//Creates Board
+	float squareSize = 1.0f;
+	float xOffset = 4 * squareSize;
+
+	for (uint i = 0; i < 4; i++)
+	{
+		for (uint j = 0; j < 8; j++)
+		{
+			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+			vector3 v3Position = vector3(j * squareSize - xOffset, 0, i * squareSize);
+			matrix4 m4Position = glm::translate(v3Position);
+			m_pEntityMngr->SetModelMatrix(m4Position);
+		}
+	}
+	
+	//m_pMeshMngr->AddCubeToRenderList(m4Position, vector3(1.0f, 0.0f, 0.0f));
+
 	m_pEntityMngr->Update();
 }
 void Application::Update(void)
