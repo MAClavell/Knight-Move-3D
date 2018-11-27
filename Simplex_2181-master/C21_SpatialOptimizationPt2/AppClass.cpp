@@ -50,12 +50,13 @@ void Application::InitVariables(void)
 			//Use modified position for knight movement
 			v3Position->x += 0.5f;
 			v3Position->y += 1;
+			v3Position->z += 0.5f;
 			gridPositions[i][j] = v3Position;
 		}
 	}
 
 	//Adds Player Model
-	m_pEntityMngr->AddEntity("KnightMove3D\\TestKnight.obj", "Knight");
+	m_pEntityMngr->AddEntity("KnightMove3D\\knight.obj", "Knight");
 	vector3 v3Position = *gridPositions[0][0];
 	knightGridPos = new vector2(0, 0);
 	matrix4 m4Matrix = glm::translate(v3Position) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
