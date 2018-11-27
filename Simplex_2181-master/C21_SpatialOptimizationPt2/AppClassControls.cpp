@@ -78,6 +78,18 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	case sf::Keyboard::RShift:
 		m_bModifier = true;
 		break;
+	case sf::Keyboard::Up:
+		MoveKnight(1);
+		break;
+	case sf::Keyboard::Left:
+		MoveKnight(2);
+		break;
+	case sf::Keyboard::Down:
+		MoveKnight(3);
+		break;
+	case sf::Keyboard::Right:
+		MoveKnight(4);
+		break;
 	}
 	
 	//gui

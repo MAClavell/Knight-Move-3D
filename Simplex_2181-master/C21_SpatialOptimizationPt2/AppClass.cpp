@@ -42,18 +42,24 @@ void Application::InitVariables(void)
 	{
 		for (uint j = 0; j < 8; j++)
 		{
-			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset);
-			matrix4 m4Position = glm::translate(v3Position);
-			m_pEntityMngr->SetModelMatrix(m4Position);
+			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "Grid(" + std::to_string(i) + "," + std::to_string(j) + ")");
+			vector3* v3Position = new vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset);
+			matrix4 m4Position = glm::translate(*v3Position);
+			m_pEntityMngr->SetModelMatrix(m4Position, -1);
+
+			//Use modified position for knight movement
+			v3Position->x += 0.5f;
+			v3Position->y += 1;
+			gridPositions[i][j] = v3Position;
 		}
 	}
 
 	//Adds Player Model
-	m_pEntityMngr->AddEntity("KnightMove3D\\TestKnight.obj");
-	vector3 v3Position = vector3(-xOffset, 1.0f, -zOffset);
-	matrix4 m4Position = glm::translate(v3Position) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	m_pEntityMngr->SetModelMatrix(m4Position);
+	m_pEntityMngr->AddEntity("KnightMove3D\\TestKnight.obj", "Knight");
+	vector3 v3Position = *gridPositions[0][0];
+	knightGridPos = new vector2(0, 0);
+	matrix4 m4Matrix = glm::translate(v3Position) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	m_pEntityMngr->SetModelMatrix(m4Matrix, -1);
 	
 	//m_pMeshMngr->AddCubeToRenderList(m4Position, vector3(1.0f, 0.0f, 0.0f));
 
@@ -119,7 +125,54 @@ void Application::Release(void)
 {
 	//Release the octree
 	SafeDelete(m_pRoot);
+	SafeDelete(knightGridPos);
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			SafeDelete(gridPositions[i][j]);
+		}
+	}
 
 	//release GUI
 	ShutdownGUI();
+}
+
+void Application::MoveKnight(int dir)
+{
+	if (dir < 0 || dir > 4)
+		return;
+	
+	Entity* knight = m_pEntityMngr->GetEntity(m_pEntityMngr->GetEntityIndex("Knight"));
+
+	//REMEMBER: the knightGridPos vector2 is reversed
+	//knightGridPos.x is the row of the grid (max 4)
+	//knightGridPos.y is the column of the grid (max 8)
+	switch (dir)
+	{
+		//Up
+		case 1:
+			if (knightGridPos->x > 0)
+				knightGridPos->x--;
+			break;
+		//Left
+		case 2:
+			if (knightGridPos->y > 0)
+				knightGridPos->y--;
+			break;
+		//Down
+		case 3:
+			if (knightGridPos->x < 3)
+				knightGridPos->x++;
+			break;
+		//Right
+		case 4:
+			if (knightGridPos->y < 7)
+				knightGridPos->y++;
+			break;
+	}
+
+	matrix4 matrix = glm::translate(*gridPositions[(int)knightGridPos->x][(int)knightGridPos->y])
+		* glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	knight->SetModelMatrix(matrix); //"Knight");
 }
