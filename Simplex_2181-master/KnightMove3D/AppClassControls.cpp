@@ -79,16 +79,16 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 		m_bModifier = true;
 		break;
 	case sf::Keyboard::Up:
-		MoveKnight(1);
+		knight->MoveKnight(1);
 		break;
 	case sf::Keyboard::Left:
-		MoveKnight(2);
+		knight->MoveKnight(2);
 		break;
 	case sf::Keyboard::Down:
-		MoveKnight(3);
+		knight->MoveKnight(3);
 		break;
 	case sf::Keyboard::Right:
-		MoveKnight(4);
+		knight->MoveKnight(4);
 		break;
 	}
 	

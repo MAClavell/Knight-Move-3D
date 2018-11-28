@@ -9,6 +9,7 @@ Date: 2017/06
 
 #include "ControllerConfiguration.h"
 #include "imgui\ImGuiObject.h"
+#include "Knight.h"
 
 namespace Simplex
 {
@@ -20,8 +21,7 @@ class Application
 	uint m_uObjects = 0; //Number of objects in the scene
 	uint m_uOctantLevels = 0; //Number of levels in the octree
 	bool m_bUsingPhysics = false; //Are we using physics in the project?
-	vector3* gridPositions[4][8];
-	vector2* knightGridPos;
+	Knight* knight = nullptr;
 
 private:
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
@@ -329,12 +329,7 @@ private:
 	*/
 	Application& operator=(Application const& input);
 #pragma endregion
-	/*
-	USAGE: creates a new frame for gui
-	ARGUMENTS: int dir -> direction to move the knight. 1 = up, 2 = left, 3 = down, 4 = right
-	OUTPUT: ---
-	*/
-	void MoveKnight(int dir);
+
 };
 
 }//namespace Simplex
