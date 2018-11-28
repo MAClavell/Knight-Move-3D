@@ -10,6 +10,9 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		vector3* grid[4][8];
 		vector2* gridIndices;
+		//vector of possible moves
+		//origin coords
+		//destination coords
 
 	public:
 		Knight(Simplex::String fileName, Simplex::String uniqueID, vector3* gridPositions[4][8]);
@@ -21,6 +24,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void MoveKnight(int dir);
+		/*
+		USAGE: Interpolates knight from origin tile to destination tile
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Jump();
 	};
 
 }

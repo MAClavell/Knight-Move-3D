@@ -73,3 +73,24 @@ void Knight::MoveKnight(int dir)
 		* glm::scale(vector3(0.25f, 0.25f, 0.25f));
 	knight->SetModelMatrix(matrix); //"Knight");
 }
+
+void Simplex::Knight::Jump()
+{
+	////get the percentage
+	//float fTimeBetweenStops = 2.0;//in seconds
+	////map the value to be between 0.0 and 1.0
+	//float fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
+
+	////calculate the current position
+	//vector3 v3CurrentPos = glm::lerp(v3Start, v3End, fPercentage);
+	//float arc = sin(fPercentage * MATH_PI);
+	//v3CurrentPos.y += arc * maxHeight;
+	//matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos);
+
+	////if we are done with this route
+	//if (fPercentage >= 1.0f)
+	//{
+	//	fTimer = m_pSystem->GetDeltaTime(uClock);//restart the clock
+	//	Land(destination); 
+	//}
+}
