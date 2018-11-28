@@ -24,6 +24,11 @@ Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord)
 	coordinate.y = coord.y;
 }
 
+Tile::Tile()
+{
+
+}
+
 //Destructor
 Tile::~Tile()
 { }
@@ -45,18 +50,14 @@ void Tile::Step()
 //Calculate and set possible moves
 void Tile::GetMoves()
 {
-	int tempMoves[8][2] = { {coordinate[0] + 1, coordinate[1] + 2}, {coordinate[0] + 2, coordinate[1] + 1}, 
-			{coordinate[0] + 2, coordinate[1] - 1}, {coordinate[0] + 1, coordinate[1] - 2}, 
-			{coordinate[0] - 1, coordinate[1] - 2}, {coordinate[0] - 2, coordinate[1] + 1}, 
-			{coordinate[0] - 2, coordinate[1] + 1}, {coordinate[0] - 1, coordinate[1] + 2}};
-
-	for (uint i = 0; i < 8; i++)
-	{
-		for (uint j = 0; j < 8; j++)
-		{
-			moves[i][j] = tempMoves[i][j];
-		}
-	}
+	moves[0] = vector2(coordinate.x + 1, coordinate.y + 2);
+	moves[1] = vector2(coordinate.x + 2, coordinate.y + 1);
+	moves[2] = vector2(coordinate.x + 2, coordinate.y - 1);
+	moves[3] = vector2(coordinate.x + 1, coordinate.y - 2);
+	moves[4] = vector2(coordinate.x - 1, coordinate.y - 2);
+	moves[5] = vector2(coordinate.x - 2, coordinate.y + 1);
+	moves[6] = vector2(coordinate.x - 2, coordinate.y + 1);
+	moves[7] = vector2(coordinate.x - 1, coordinate.y + 2);
 }
 
 //Returns true if health > 0

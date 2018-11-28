@@ -1,6 +1,7 @@
 #pragma once
 #include "Definitions.h"
 #include "Board.h"
+#include "Tile.h"
 
 namespace Simplex
 {
@@ -11,9 +12,9 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		vector2 gridIndex;
 		Board* board;
-		//vector of possible moves
-		//origin coords
-		//destination coords
+		std::vector<vector2> validMoves;
+		Tile origin; //Tile that knight is currently jumping from
+		Tile destination; //Tile that knight is currently jumping to
 
 	public:
 		Knight(String fileName, String uniqueID, Board* brd);
@@ -37,6 +38,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void Jump();
+		/*
+		USAGE: Called upon the end of a jump
+		ARGUMENTS: Destination tile that has just been reached
+		OUTPUT: ---
+		*/
+		void Land(Tile target);
 	};
 
 }

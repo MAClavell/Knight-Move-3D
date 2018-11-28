@@ -9,6 +9,8 @@ Knight::Knight(Simplex::String fileName, Simplex::String uniqueID, Board* brd) :
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
 
+	//TO DO: initialize origin and destination tiles
+
 	//Add board and set initial position
 	board = brd;
 	gridIndex = vector2(0, 0);
@@ -81,4 +83,34 @@ void Simplex::Knight::Jump()
 	//	fTimer = m_pSystem->GetDeltaTime(uClock);//restart the clock
 	//	Land(destination); 
 	//}
+}
+
+void Simplex::Knight::Land(Tile target)
+{
+	//TO DO: Check if knight dies
+
+	//TO DO: Check if heart is here (or do this in Step()?)
+
+	//Decrement target's health
+	target.Step();
+
+	//TO DO: Reset LERP variables (time, origin)
+	origin = target;
+
+	//Replace validMoves
+	validMoves.clear();
+
+	//Iterate through tile's array of moves
+	for (int i = 0; i < 8; i++)
+	{
+		//If the coordinate is on the board, add it to the list of valid moves
+		vector2 move = target.GetMoves[i];
+		if (move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 4)
+		{
+			validMoves.push_back(board->GetTile(target.GetMoves[i]));
+		}
+	}
+
+	//Set new default destination
+	destination = validMoves[0];
 }

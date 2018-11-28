@@ -1,5 +1,6 @@
 #pragma once
 #include "Definitions.h"
+#include "Board.h"
 
 namespace Simplex
 {
@@ -12,12 +13,13 @@ namespace Simplex
 
 	public:
 		Tile(String fileName, String uniqueID, vector3 position, vector2 coord);
+		Tile();
 		~Tile();
 		
 		//Public Member Variables
 		uint health;
 		vector2 coordinate; //this tile's coordinates
-		int moves[8][2]; //array of possible moves
+		vector2 moves[8]; //array of possible moves
 
 		//Public Member Functions
 		/*
@@ -44,10 +46,6 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		bool IsAlive(); 
-
-		//Knight Stuff, whoops
-		//int origin[2]; //ij-coordinate of 
-		//int destination[2];
 	};
 
 }

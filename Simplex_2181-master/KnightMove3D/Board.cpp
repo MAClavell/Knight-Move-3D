@@ -48,3 +48,17 @@ vector3 Board::GetKnightPositionOnTile(int row, int col)
 {
 	return tiles[row][col]->GetKnightPosition();
 }
+
+Tile Simplex::Board::GetTile(vector2 coord)
+{
+	for (uint i = 0; i < NUM_ROWS; i++)
+	{
+		for (uint j = 0; j < NUM_COLS; j++)
+		{
+			if (i == coord.x && j == coord.y)
+			{
+				return *tiles[i][j];
+			}
+		}
+	}
+}

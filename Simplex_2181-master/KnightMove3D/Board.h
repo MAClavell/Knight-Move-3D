@@ -30,5 +30,12 @@ namespace Simplex
 		OUTPUT: A vector3 containing the knight position
 		*/
 		vector3 GetKnightPositionOnTile(int row, int col);
+
+		/*
+		USAGE: Get the tile at the specified coordinates
+		ARGUMENTS: ---
+		OUTPUT: A vector3 containing the knight position
+		*/
+		Tile GetTile(vector2 coord);
 	};
 }
