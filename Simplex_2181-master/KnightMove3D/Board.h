@@ -33,8 +33,8 @@ namespace Simplex
 
 		/*
 		USAGE: Get the tile at the specified coordinates
-		ARGUMENTS: ---
-		OUTPUT: A vector3 containing the knight position
+		ARGUMENTS: Coordinates to search for
+		OUTPUT: The tile at the specified coordinates
 		*/
 		Tile GetTile(vector2 coord);
 	};

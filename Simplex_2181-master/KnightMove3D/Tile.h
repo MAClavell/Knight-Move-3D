@@ -1,6 +1,5 @@
 #pragma once
 #include "Definitions.h"
-#include "Board.h"
 
 namespace Simplex
 {
@@ -35,11 +34,11 @@ namespace Simplex
 		*/
 		void Step(); 
 		/*
-		USAGE: Calculate and set possible moves
+		USAGE: Calculate and set legal coordinates to move to from this tile
 		ARGUMENTS: ---
-		OUTPUT: ---
+		OUTPUT: list of moves
 		*/
-		void GetMoves(); 
+		std::vector<vector2> GetMoves(); 
 		/*
 		USAGE: Returns true if health > 0
 		ARGUMENTS: ---

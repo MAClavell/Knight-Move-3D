@@ -64,7 +64,7 @@ void Knight::MoveKnight(int dir)
 	this->SetPosition(board->GetKnightPositionOnTile((int)gridIndex.x, (int)gridIndex.y));
 }
 
-void Simplex::Knight::Jump()
+void Knight::Jump()
 {
 	////get the percentage
 	//float fTimeBetweenStops = 2.0;//in seconds
@@ -85,7 +85,7 @@ void Simplex::Knight::Jump()
 	//}
 }
 
-void Simplex::Knight::Land(Tile target)
+void Knight::Land(Tile target)
 {
 	//TO DO: Check if knight dies
 
@@ -104,13 +104,13 @@ void Simplex::Knight::Land(Tile target)
 	for (int i = 0; i < 8; i++)
 	{
 		//If the coordinate is on the board, add it to the list of valid moves
-		vector2 move = target.GetMoves[i];
+		vector2 move = target.GetMoves()[i];
 		if (move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 4)
 		{
-			validMoves.push_back(board->GetTile(target.GetMoves[i]));
+			//validMoves.push_back(board->GetTile(move));
 		}
 	}
 
 	//Set new default destination
-	destination = validMoves[0];
+	//destination = validMoves[0];
 }
