@@ -1,34 +1,54 @@
 #include "Tile.h"
 using namespace Simplex;
 
-void Simplex::Tile::Init()
+//Constructor
+Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord)
 {
+	//Initialize entity manager and entity
+	entityMngr = EntityManager::GetInstance();
+	entityMngr->AddEntity(fileName, uniqueID);
+
+	//Set positon
+	matrix4 m4Position = glm::translate(position);
+	entityMngr->SetModelMatrix(m4Position, -1);
+
+	//Set knight position
+	position.x += 0.5f;
+	position.y += 1;
+	position.z += 0.5f;
+	knightPosition = vector3(position);
+
+	//Set data
 	health = 3;
+	coordinate.x = coord.x;
+	coordinate.y = coord.y;
 }
 
-Tile::Tile()
-{
-	Init();
-}
-
-
+//Destructor
 Tile::~Tile()
+{ }
+
+//Gets the position that the knight should be on when on this tile
+vector3 Tile::GetKnightPosition()
 {
+	return knightPosition;
 }
 
-void Simplex::Tile::Step()
+//Decrement health and change color
+void Tile::Step()
 {
 	health--;
 	if (health < 0) health = 0;
-	//TO DO: change color/delete based on health
+	//TODO: change color/delete based on health
 }
 
-void Simplex::Tile::GetMoves()
+//Calculate and set possible moves
+void Tile::GetMoves()
 {
-	int tempMoves[8][2] = { {position[0] + 1, position[1] + 2}, {position[0] + 2, position[1] + 1}, 
-			{position[0] + 2, position[1] - 1}, {position[0] + 1, position[1] - 2}, 
-			{position[0] - 1, position[1] - 2}, {position[0] - 2, position[1] + 1}, 
-			{position[0] - 2, position[1] + 1}, {position[0] - 1, position[1] + 2}};
+	int tempMoves[8][2] = { {coordinate[0] + 1, coordinate[1] + 2}, {coordinate[0] + 2, coordinate[1] + 1}, 
+			{coordinate[0] + 2, coordinate[1] - 1}, {coordinate[0] + 1, coordinate[1] - 2}, 
+			{coordinate[0] - 1, coordinate[1] - 2}, {coordinate[0] - 2, coordinate[1] + 1}, 
+			{coordinate[0] - 2, coordinate[1] + 1}, {coordinate[0] - 1, coordinate[1] + 2}};
 
 	for (uint i = 0; i < 8; i++)
 	{
@@ -39,7 +59,8 @@ void Simplex::Tile::GetMoves()
 	}
 }
 
-bool Simplex::Tile::IsAlive()
+//Returns true if health > 0
+bool Tile::IsAlive()
 {
 	if (health > 0) return true;
 	else return false;

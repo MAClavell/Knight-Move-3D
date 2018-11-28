@@ -30,36 +30,14 @@ void Application::InitVariables(void)
 	//		m_pEntityMngr->UsePhysicsSolver(m_bUsingPhysics); //Apply physics to the objects
 	//	}
 	//}
-	m_uOctantLevels = 1;
-	m_pRoot = new Octant(m_uOctantLevels,5);
-
-	//Creates Board
-	float squareSize = 1.0f;
-	float xOffset = 4 * squareSize;
-	float zOffset = 2 * squareSize;
-
-	vector3* gridPositions[4][8];
-	for (uint i = 0; i < 4; i++)
-	{
-		for (uint j = 0; j < 8; j++)
-		{
-			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj", "Grid(" + std::to_string(i) + "," + std::to_string(j) + ")");
-			vector3* v3Position = new vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset);
-			matrix4 m4Position = glm::translate(*v3Position);
-			m_pEntityMngr->SetModelMatrix(m4Position, -1);
-
-			//Use modified position for knight movement
-			v3Position->x += 0.5f;
-			v3Position->y += 1;
-			v3Position->z += 0.5f;
-			gridPositions[i][j] = v3Position;
-		}
-	}
+	m_uOctantLevels = 2;
+	m_pRoot = new Octant(m_uOctantLevels, 5);
+	
+	//Create the board
+	Board* board = new Board();
 
 	//Adds Player Model
-	knight = new Knight("KnightMove3D\\knight.obj", "Knight", gridPositions);
-	
-	//m_pMeshMngr->AddCubeToRenderList(m4Position, vector3(1.0f, 0.0f, 0.0f));
+	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board);
 
 	m_pEntityMngr->Update();
 }
@@ -124,6 +102,7 @@ void Application::Release(void)
 	//Release the octree
 	SafeDelete(m_pRoot);
 	SafeDelete(knight);
+	SafeDelete(board);
 
 	//release GUI
 	ShutdownGUI();
