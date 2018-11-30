@@ -19,6 +19,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
+	Land(origin);
 
 }
 
@@ -135,7 +136,7 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	if (clockwise)
 	{
 		destinationIndex++;
-		if (destinationIndex > validMoves.size())
+		if (destinationIndex >= validMoves.size())
 			destinationIndex = 0;
 		
 	}
