@@ -90,6 +90,15 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	case sf::Keyboard::Right:
 		knight->MoveKnight(4);
 		break;
+	case sf::Keyboard::Z:
+		//Decrement move index
+		break;
+	case sf::Keyboard::X:
+		//Increment Move Index
+		break;
+	case sf::Keyboard::C:
+		//Speed Up
+		break;
 	}
 	
 	//gui
@@ -150,6 +159,9 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			SafeDelete(m_pRoot);
 			m_pRoot = new Octant(m_uOctantLevels, 5);
 		}
+		break;
+	case sf::Keyboard::C:
+		//Return to regular speed
 		break;
 	case sf::Keyboard::LShift:
 	case sf::Keyboard::RShift:
