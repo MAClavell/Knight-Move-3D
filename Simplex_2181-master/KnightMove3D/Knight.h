@@ -14,7 +14,6 @@ namespace Simplex
 	{
 	private:
 		EntityManager* entityMngr = nullptr;
-		SystemSingleton* system = nullptr;
 		vector2 gridIndex;
 		Board* board;
 		std::vector<Tile> validMoves;
@@ -23,7 +22,7 @@ namespace Simplex
 		float maxHeight = 2.0f;
 
 		//LERP timing
-		SystemSingleton* m_pSystem = nullptr; //Singleton of the system
+		SystemSingleton* system = nullptr; //Singleton of the system
 		float fTimeBetweenStops = 5.0;
 		float fPercentage;
 		

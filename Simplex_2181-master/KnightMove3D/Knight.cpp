@@ -88,7 +88,7 @@ void Knight::Jump()
 	//if we are done with this route
 	if (fPercentage >= 1.0f)
 	{
-		fTimer = m_pSystem->GetDeltaTime(uClock);//restart the clock
+		fTimer = system->GetDeltaTime(uClock);//restart the clock
 		Land(destination); 
 	}
 }
