@@ -63,12 +63,13 @@ Tile Board::GetTile(vector2 coord)
 	{
 		for (uint j = 0; j < 8; j++)
 		{
-			if (i == coord.x && j == coord.y)
+			if (j == coord.x && i == coord.y)
 			{
 				return *tiles[i][j];
 			}
 		}
 	}
+
 }
 
 //Set a new random position for the heart
