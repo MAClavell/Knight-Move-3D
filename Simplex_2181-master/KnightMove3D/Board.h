@@ -1,6 +1,7 @@
 #pragma once
 #include "Definitions.h"
 #include "Tile.h"
+#include "Heart.h"
 
 #define NUM_ROWS 4
 #define NUM_COLS 8
@@ -12,6 +13,7 @@ namespace Simplex
 	private:
 		EntityManager* entityMngr = nullptr;
 		Tile* tiles[NUM_ROWS][NUM_COLS];
+		Heart* heart = nullptr;
 
 	public:
 		Board();
@@ -37,5 +39,20 @@ namespace Simplex
 		OUTPUT: The tile at the specified coordinates
 		*/
 		Tile GetTile(vector2 coord);
+
+		/*
+		USAGE: Get the heart object
+		ARGUMENTS: 
+		OUTPUT: The heart object
+		*/
+		Heart* GetHeart();
+
+	private:
+		/*
+		USAGE: Set a random position for the heart
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void SetRandHeartPosition();
 	};
 }

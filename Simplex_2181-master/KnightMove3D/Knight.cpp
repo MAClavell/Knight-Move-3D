@@ -3,7 +3,7 @@
 using namespace Simplex;
 
 //Constructor
-Knight::Knight(Simplex::String fileName, Simplex::String uniqueID, Board* brd) : Entity(fileName, uniqueID)
+Knight::Knight(String fileName, String uniqueID, Board* brd)
 {
 	//Initialize entity manager and entity
 	entityMngr = EntityManager::GetInstance();

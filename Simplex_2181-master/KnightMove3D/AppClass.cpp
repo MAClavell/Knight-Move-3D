@@ -2,6 +2,9 @@
 using namespace Simplex;
 void Application::InitVariables(void)
 {
+	//Seed the random number generator
+	srand(time(NULL));
+
 	//Set the position and target of the camera
 	m_pCameraMngr->SetPositionTargetAndUpward(
 		vector3(0.0f, 10.0f, 10.0f), //Position

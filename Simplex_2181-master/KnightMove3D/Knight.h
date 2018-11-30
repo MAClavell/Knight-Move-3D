@@ -6,7 +6,7 @@
 namespace Simplex
 {
 
-	class Knight : public Entity
+	class Knight
 	{
 	private:
 		EntityManager* entityMngr = nullptr;

@@ -1,4 +1,5 @@
 #include "Board.h"
+
 using namespace Simplex;
 
 //Constructor
@@ -22,6 +23,10 @@ Board::Board()
 			tiles[i][j] = tile;
 		}
 	}
+
+	//Create the heart
+	heart = new Heart("Minecraft//Cube.obj", "Heart");
+	SetRandHeartPosition();
 }
 
 //Desctructor
@@ -35,6 +40,8 @@ Board::~Board()
 			SafeDelete(tiles[i][j]);
 		}
 	}
+
+	SafeDelete(heart);
 }
 
 //Get the dimensions of the board
@@ -49,6 +56,7 @@ vector3 Board::GetKnightPositionOnTile(int row, int col)
 	return tiles[row][col]->GetKnightPosition();
 }
 
+//Get the tile at the specified coordinates
 Tile Board::GetTile(vector2 coord)
 {
 	for (uint i = 0; i < 4; i++)
@@ -61,4 +69,26 @@ Tile Board::GetTile(vector2 coord)
 			}
 		}
 	}
+}
+
+//Set a new random position for the heart
+void Board::SetRandHeartPosition()
+{
+	int row = -1;
+	int col = -1;
+
+	while (row < 0 || col < 0)
+	{
+		row = rand() % NUM_ROWS;
+		col = rand() % NUM_COLS;
+	}
+
+	heart->SetPosition(GetKnightPositionOnTile(row, col), vector2(row, col));
+
+}
+
+//Set a new random position for the heart
+Heart* Board::GetHeart()
+{
+	return heart;
 }

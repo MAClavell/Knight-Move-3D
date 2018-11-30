@@ -14,7 +14,7 @@
     <ProjectGuid>{AA74BEEF-2484-4B8A-A9F4-ACB122220189}</ProjectGuid>
     <RootNamespace>KnightMove3D</RootNamespace>
     <ProjectName>KnightMove3D</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -107,6 +107,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClCompile Include="AppClassMain.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="ControllerConfiguration.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -121,6 +122,7 @@ xcopy "$(SolutionDir)include\Simplex\Shaders" "$(SolutionDir)_Binary\Shaders" /y
     <ClInclude Include="Board.h" />
     <ClInclude Include="ControllerConfiguration.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Tile.h" />
