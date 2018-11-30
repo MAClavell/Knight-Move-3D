@@ -1,4 +1,8 @@
 #pragma once
+#define _USE_MATH_DEFINES
+
+#include <cmath>
+#include <math.h>
 #include "Definitions.h"
 #include "Board.h"
 #include "Tile.h"
@@ -10,14 +14,22 @@ namespace Simplex
 	{
 	private:
 		EntityManager* entityMngr = nullptr;
+		SystemSingleton* system = nullptr;
 		vector2 gridIndex;
 		Board* board;
-		std::vector<vector2> validMoves;
+		std::vector<Tile> validMoves;
 		Tile origin; //Tile that knight is currently jumping from
 		Tile destination; //Tile that knight is currently jumping to
+		float maxHeight = 2.0f;
+
+		//LERP timing
+		SystemSingleton* m_pSystem = nullptr; //Singleton of the system
+		float fTimeBetweenStops = 5.0;
+		float fPercentage;
+		
 
 	public:
-		Knight(String fileName, String uniqueID, Board* brd);
+		Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system);
 		~Knight();
 
 		/*

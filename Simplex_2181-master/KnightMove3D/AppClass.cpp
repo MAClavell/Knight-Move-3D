@@ -40,7 +40,7 @@ void Application::InitVariables(void)
 	Board* board = new Board();
 
 	//Adds Player Model
-	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board);
+	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board, m_pSystem);
 
 	m_pEntityMngr->Update();
 }
@@ -48,6 +48,9 @@ void Application::Update(void)
 {
 	//Update the system so it knows how much time has passed since the last call
 	m_pSystem->Update();
+
+	//Update Entities
+	knight->Jump();
 
 	//Is the ArcBall active?
 	ArcBall();
