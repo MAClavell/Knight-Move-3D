@@ -122,4 +122,30 @@ void Knight::Land(Tile target)
 
 	//Set new default destination
 	destination = validMoves[0];
+	destinationIndex = 0;
+}
+
+void Simplex::Knight::SetSpeed(float newTime)
+{
+	fTimeBetweenStops = newTime;
+}
+
+void Simplex::Knight::ChangeMove(bool clockwise)
+{
+	if (clockwise)
+	{
+		destinationIndex++;
+		if (destinationIndex > validMoves.size())
+			destinationIndex = 0;
+		
+	}
+	else
+	{
+		destinationIndex--;
+		if (destinationIndex < 0)
+			destinationIndex = validMoves.size() - 1;
+
+	}
+
+	destination = validMoves[destinationIndex];
 }
