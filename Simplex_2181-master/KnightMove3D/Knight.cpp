@@ -115,7 +115,7 @@ void Knight::Land(Tile target)
 	{
 		//If the coordinate is on the board, add it to the list of valid moves
 		vector2 move = target.GetMoves()[i];
-		if (move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 4)
+		if (move.x >= 0 && move.x < 4 && move.y >= 0 && move.y < 8)
 		{
 				validMoves.push_back(board->GetTile(move));
 		}
