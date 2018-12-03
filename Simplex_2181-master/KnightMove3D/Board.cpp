@@ -3,8 +3,11 @@
 using namespace Simplex;
 
 //Constructor
-Board::Board()
+Board::Board(SystemSingleton* a_system)
 {
+	//Get singleton
+	system = a_system;
+
 	//Define square size
 	float squareSize = 1.0f;
 	float xOffset = 4 * squareSize;
@@ -27,6 +30,11 @@ Board::Board()
 	//Create the heart
 	heart = new Heart("Minecraft//Cube.obj", "Heart");
 	SetRandHeartPosition();
+	placingHeart = false;
+
+	//Instantiate heart timer vars
+	placeTimer = 0;//store the new timer
+	uClock = system->GenClock(); //generate a new clock for the timer
 }
 
 //Desctructor
@@ -44,6 +52,41 @@ Board::~Board()
 	SafeDelete(heart);
 }
 
+//Update the board
+void Board::Update()
+{
+	if (!placingHeart)
+		return;
+
+	//Step between each tile "regenerating" them
+	placeTimer += system->GetDeltaTime(uClock); //get the delta time for that timer
+
+	//Increment tile
+	if (placeTimer > placeTimeStep)
+	{
+		//Increment the index of the heart
+		placeIndex.x++;
+		if (placeIndex.x == NUM_ROWS)
+		{
+			placeIndex.x = 0;
+			placeIndex.y++;
+		}
+
+		//Check if we are past the max tile
+		if (placeIndex.y >= NUM_COLS)
+		{
+			placingHeart = false;
+			SetRandHeartPosition();
+			return;
+		}
+
+		//Set heart position and restart the clock
+		heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex); 
+		placeTimer = system->GetDeltaTime(uClock);
+		placeTimer = 0;
+	}
+}
+
 //Get the dimensions of the board
 vector2 Board::GetBoardDimensions()
 {
@@ -51,9 +94,9 @@ vector2 Board::GetBoardDimensions()
 }
 
 //Get the knight position on a tile at the specified index
-vector3 Board::GetKnightPositionOnTile(int row, int col)
+vector3 Board::GetKnightPositionOnTile(vector2 index)
 {
-	return tiles[row][col]->GetKnightPosition();
+	return tiles[(int)index.x][(int)index.y]->GetKnightPosition();
 }
 
 //Get the tile at the specified coordinates
@@ -79,7 +122,10 @@ void Board::HandleIfOnHeart(vector2 gridIndex)
 	if (gridIndex != heart->GetIndex())
 		return;
 
-	SetRandHeartPosition();
+	placeTimer = 0;
+	placingHeart = true;
+	placeIndex = vector2(0, 0);
+	heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex);
 }
 
 //Set a new random position for the heart
@@ -94,7 +140,8 @@ void Board::SetRandHeartPosition()
 		col = rand() % NUM_COLS;
 	}
 
-	heart->SetPosition(GetKnightPositionOnTile(row, col), vector2(row, col));
+	vector2 pos(row, col);
+	heart->SetPosition(GetKnightPositionOnTile(pos), pos);
 
 }
 
@@ -102,4 +149,9 @@ void Board::SetRandHeartPosition()
 Heart* Board::GetHeart()
 {
 	return heart;
+}
+
+bool Board::IsPlacingHeart()
+{
+	return placingHeart;
 }

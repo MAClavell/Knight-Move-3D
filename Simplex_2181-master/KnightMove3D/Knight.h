@@ -37,12 +37,6 @@ namespace Simplex
 		*/
 		void SetPosition(vector3 newPos);
 		/*
-		USAGE: moves the knight in a given direction
-		ARGUMENTS: int dir -> direction to move the knight. 1 = up, 2 = left, 3 = down, 4 = right
-		OUTPUT: ---
-		*/
-		void MoveKnight(int dir);
-		/*
 		USAGE: Interpolates knight from origin tile to destination tile
 		ARGUMENTS: ---
 		OUTPUT: ---

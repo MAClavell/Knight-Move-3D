@@ -14,7 +14,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Add board and set initial position
 	board = brd;
 	gridIndex = vector2(0, 0);
-	this->SetPosition(board->GetKnightPositionOnTile((int)gridIndex.x, (int)gridIndex.y));
+	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
 
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
@@ -37,47 +37,14 @@ void Knight::SetPosition(vector3 newPos)
 	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(matrix);
 }
 
-//moves the knight in a given direction
-void Knight::MoveKnight(int dir)
-{
-	if (dir < 0 || dir > 4)
-		return;
-
-	//REMEMBER: the knightGridPos vector2 is reversed
-	//knightGridPos.x is the row of the grid (max 4)
-	//knightGridPos.y is the column of the grid (max 8)
-	switch (dir)
-	{
-		//Up
-	case 1:
-		if (gridIndex.x > 0)
-			gridIndex.x--;
-		break;
-		//Left
-	case 2:
-		if (gridIndex.y > 0)
-			gridIndex.y--;
-		break;
-		//Down
-	case 3:
-		if (gridIndex.x < board->GetBoardDimensions().x - 1)
-			gridIndex.x++;
-		break;
-		//Right
-	case 4:
-		if (gridIndex.y < board->GetBoardDimensions().y - 1)
-			gridIndex.y++;
-		break;
-	}
-
-	this->SetPosition(board->GetKnightPositionOnTile((int)gridIndex.x, (int)gridIndex.y));
-}
-
 void Knight::Jump()
 {
+	//If the heart is being placed, don't jump
+	if (board->IsPlacingHeart())
+		return;
 
 	static float fTimer = 0;//store the new timer
-	static uint uClock =system->GenClock(); //generate a new clock for that timer
+	static uint uClock = system->GenClock(); //generate a new clock for that timer
 	fTimer += system->GetDeltaTime(uClock); //get the delta time for that timer
 
 	//map the percentage to be between 0.0 and 1.0
@@ -121,7 +88,7 @@ void Knight::Land(Tile target)
 		vector2 move = target.GetMoves()[i];
 		if (move.x >= 0 && move.x < 4 && move.y >= 0 && move.y < 8)
 		{
-				validMoves.push_back(board->GetTile(move));
+			validMoves.push_back(board->GetTile(move));
 		}
 	}
 
