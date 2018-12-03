@@ -19,6 +19,9 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
+
+	//TO DO: set rotation matrix
+
 	Land(origin);
 
 }
@@ -84,7 +87,8 @@ void Knight::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin.GetKnightPosition(), destination.GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	this->SetPosition(v3CurrentPos);
+	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(m4Model);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)
@@ -149,4 +153,6 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	}
 
 	destination = validMoves[destinationIndex];
+
+	//TO DO: Change rotation matrix
 }
