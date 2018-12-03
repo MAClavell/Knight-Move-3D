@@ -20,8 +20,6 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
 
-	//TO DO: set rotation matrix
-
 	Land(origin);
 
 }
@@ -87,7 +85,7 @@ void Knight::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin.GetKnightPosition(), destination.GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.25f, 0.25f, 0.25f));
 	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(m4Model);
 
 	//if we are done with this route
@@ -128,6 +126,8 @@ void Knight::Land(Tile target)
 	//Set new default destination
 	destination = validMoves[0];
 	destinationIndex = 0;
+
+	SetRotation(origin, destination);
 }
 
 void Simplex::Knight::SetSpeed(float newTime)
@@ -154,5 +154,14 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 
 	destination = validMoves[destinationIndex];
 
-	//TO DO: Change rotation matrix
+	SetRotation(origin, destination);
+}
+
+matrix4 Simplex::Knight::SetRotation(Tile start, Tile end)
+{
+	vector3 distance = end.GetKnightPosition() - start.GetKnightPosition();
+	float angle = atan2f(distance.y, distance.x);
+	matrix4 newRotation = ToMatrix4(glm::angleAxis(angle, vector3(0.0f, 1.0f, 0.0f)));
+	rotation = newRotation;
+	return newRotation;
 }

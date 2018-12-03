@@ -66,6 +66,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void ChangeMove(bool clockwise);
+		/*
+		USAGE: sets rotation matrix to make knight face correct direction
+		ARGUMENTS: Origin and destination tiles
+		OUTPUT: new rotation matrix
+		*/
+		matrix4 SetRotation(Tile start, Tile end);
 	};
 
 }
