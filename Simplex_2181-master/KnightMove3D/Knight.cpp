@@ -83,8 +83,7 @@ void Knight::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin.GetKnightPosition(), destination.GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(m4Model);
+	this->SetPosition(v3CurrentPos);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)
@@ -98,7 +97,8 @@ void Knight::Land(Tile target)
 {
 	//TO DO: Check if knight dies
 
-	//TO DO: Check if heart is here (or do this in Step()?)
+	//Check if the heart is on this tile
+	board->HandleIfOnHeart(target.coordinate);
 
 	//Decrement target's health
 	target.Step();
