@@ -19,9 +19,6 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
-
-	//TO DO: set rotation matrix
-
 	Land(origin);
 
 }
@@ -87,8 +84,7 @@ void Knight::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin.GetKnightPosition(), destination.GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f)); //TO DO: multiply rotation matrix (TRS)
-	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(m4Model);
+	this->SetPosition(v3CurrentPos);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)
@@ -102,7 +98,8 @@ void Knight::Land(Tile target)
 {
 	//TO DO: Check if knight dies
 
-	//TO DO: Check if heart is here (or do this in Step()?)
+	//Check if the heart is on this tile
+	board->HandleIfOnHeart(target.coordinate);
 
 	//Decrement target's health
 	target.Step();
@@ -152,6 +149,4 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	}
 
 	destination = validMoves[destinationIndex];
-
-	//TO DO: Change rotation matrix
 }

@@ -41,6 +41,13 @@ namespace Simplex
 		Tile GetTile(vector2 coord);
 
 		/*
+		USAGE: Get if a position is the heart's index, then apply the effect
+		ARGUMENTS: The index to check
+		OUTPUT: ---
+		*/
+		void HandleIfOnHeart(vector2 gridIndex);
+
+		/*
 		USAGE: Get the heart object
 		ARGUMENTS: 
 		OUTPUT: The heart object

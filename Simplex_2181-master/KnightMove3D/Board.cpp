@@ -73,6 +73,15 @@ Tile Board::GetTile(vector2 coord)
 
 }
 
+//Get if a position is the heart's index
+void Board::HandleIfOnHeart(vector2 gridIndex)
+{
+	if (gridIndex != heart->GetIndex())
+		return;
+
+	SetRandHeartPosition();
+}
+
 //Set a new random position for the heart
 void Board::SetRandHeartPosition()
 {
