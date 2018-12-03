@@ -19,6 +19,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
+	Land(origin);
 
 }
 
@@ -114,7 +115,7 @@ void Knight::Land(Tile target)
 	{
 		//If the coordinate is on the board, add it to the list of valid moves
 		vector2 move = target.GetMoves()[i];
-		if (move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 4)
+		if (move.x >= 0 && move.x < 4 && move.y >= 0 && move.y < 8)
 		{
 				validMoves.push_back(board->GetTile(move));
 		}
@@ -122,4 +123,30 @@ void Knight::Land(Tile target)
 
 	//Set new default destination
 	destination = validMoves[0];
+	destinationIndex = 0;
+}
+
+void Simplex::Knight::SetSpeed(float newTime)
+{
+	fTimeBetweenStops = newTime;
+}
+
+void Simplex::Knight::ChangeMove(bool clockwise)
+{
+	if (clockwise)
+	{
+		destinationIndex++;
+		if (destinationIndex >= validMoves.size())
+			destinationIndex = 0;
+		
+	}
+	else
+	{
+		destinationIndex--;
+		if (destinationIndex < 0)
+			destinationIndex = validMoves.size() - 1;
+
+	}
+
+	destination = validMoves[destinationIndex];
 }

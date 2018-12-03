@@ -1,8 +1,5 @@
 #pragma once
-#define _USE_MATH_DEFINES
 
-#include <cmath>
-#include <math.h>
 #include "Definitions.h"
 #include "Board.h"
 #include "Tile.h"
@@ -20,6 +17,7 @@ namespace Simplex
 		Tile origin; //Tile that knight is currently jumping from
 		Tile destination; //Tile that knight is currently jumping to
 		float maxHeight = 2.0f;
+		int destinationIndex = 0;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -55,6 +53,18 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void Land(Tile target);
+		/*
+		USAGE: sets fTimeBetweenStops
+		ARGUMENTS: amount of seconds to have LERP take
+		OUTPUT: ---
+		*/
+		void SetSpeed(float newTime);
+		/*
+		USAGE: changes destination of knight's current jump
+		ARGUMENTS: true if going to the next move clockwise
+		OUTPUT: ---
+		*/
+		void ChangeMove(bool clockwise);
 	};
 
 }

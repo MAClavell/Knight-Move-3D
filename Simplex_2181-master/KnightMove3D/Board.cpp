@@ -59,13 +59,14 @@ vector3 Board::GetKnightPositionOnTile(int row, int col)
 //Get the tile at the specified coordinates
 Tile Board::GetTile(vector2 coord)
 {
-	for (uint i = 0; i < 4; i++)
+	for (uint i = 0; i < NUM_ROWS; i++)
 	{
-		for (uint j = 0; j < 8; j++)
+		for (uint j = 0; j < NUM_COLS; j++)
 		{
-			if (j == coord.x && i == coord.y)
+			if (i == coord.x && j == coord.y)
 			{
-				return *tiles[i][j];
+				if(tiles[i][j])
+					return *tiles[i][j];
 			}
 		}
 	}
