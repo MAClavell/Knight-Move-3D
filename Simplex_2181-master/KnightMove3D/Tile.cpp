@@ -19,7 +19,7 @@ Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord)
 	knightPosition = vector3(position);
 
 	//Set data
-	health = 3;
+	health = MAX_HEALTH;
 	coordinate.x = coord.x;
 	coordinate.y = coord.y;
 }
@@ -68,9 +68,17 @@ std::vector<vector2> Tile::GetMoves()
 	return tempList;
 }
 
+//Checks if the tile is dead, and revives it if it is
+void Tile::CheckAndReviveTile()
+{
+	if (!IsAlive())
+	{
+		health = MAX_HEALTH;
+	}
+}
+
 //Returns true if health > 0
 bool Tile::IsAlive()
 {
-	if (health > 0) return true;
-	else return false;
+	return health > 0;
 }

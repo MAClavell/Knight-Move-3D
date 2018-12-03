@@ -5,6 +5,7 @@
 
 #define NUM_ROWS 4
 #define NUM_COLS 8
+#define PLACE_TIME 3
 
 namespace Simplex
 {
@@ -15,9 +16,26 @@ namespace Simplex
 		Tile* tiles[NUM_ROWS][NUM_COLS];
 		Heart* heart = nullptr;
 
+		//System vars
+		SystemSingleton* system = nullptr; //Singleton of the system
+		uint uClock;
+
+		//Heart placement vars
+		bool placingHeart = false;
+		vector2 placeIndex = vector2(0, 0);
+		float placeTimeStep = ((float)PLACE_TIME) / (NUM_ROWS * NUM_COLS);
+		float placeTimer = 0;
+
 	public:
-		Board();
+		Board(SystemSingleton* a_system);
 		~Board();
+
+		/*
+		USAGE: Update the board
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Update();
 
 		/*
 		USAGE: Get the dimensions of the board
@@ -31,7 +49,7 @@ namespace Simplex
 		ARGUMENTS: ---
 		OUTPUT: A vector3 containing the knight position
 		*/
-		vector3 GetKnightPositionOnTile(int row, int col);
+		vector3 GetKnightPositionOnTile(vector2 index);
 
 		/*
 		USAGE: Get the tile at the specified coordinates
@@ -53,6 +71,13 @@ namespace Simplex
 		OUTPUT: The heart object
 		*/
 		Heart* GetHeart();
+
+		/*
+		USAGE: Check if the board is placing the heart
+		ARGUMENTS: ---
+		OUTPUT: If the heart is being placed
+		*/
+		bool IsPlacingHeart();
 
 	private:
 		/*

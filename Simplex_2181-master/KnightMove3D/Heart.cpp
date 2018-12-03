@@ -1,5 +1,7 @@
 #include "Heart.h"
 
+#define Y_INC 0.05f;
+
 using namespace Simplex;
 
 Heart::Heart(String fileName, String uniqueID)
@@ -17,7 +19,8 @@ Heart::~Heart()
 void Heart::SetPosition(vector3 newPos, vector2 index)
 {
 	gridIndex = index;
-	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	newPos.y += Y_INC;
+	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.5f, 0.5f, 0.5f));
 	entityMngr->GetEntity(entityMngr->GetEntityIndex("Heart"))->SetModelMatrix(matrix);
 }
 

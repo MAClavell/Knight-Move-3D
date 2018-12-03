@@ -78,18 +78,6 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	case sf::Keyboard::RShift:
 		m_bModifier = true;
 		break;
-	case sf::Keyboard::Up:
-		knight->MoveKnight(1);
-		break;
-	case sf::Keyboard::Left:
-		knight->MoveKnight(2);
-		break;
-	case sf::Keyboard::Down:
-		knight->MoveKnight(3);
-		break;
-	case sf::Keyboard::Right:
-		knight->MoveKnight(4);
-		break;
 	case sf::Keyboard::Z:
 		//Decrement move index
 		knight->ChangeMove(false);

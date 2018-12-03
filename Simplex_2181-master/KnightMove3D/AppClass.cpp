@@ -37,7 +37,7 @@ void Application::InitVariables(void)
 	m_pRoot = new Octant(m_uOctantLevels, 5);
 	
 	//Create the board
-	Board* board = new Board();
+	board = new Board(m_pSystem);
 
 	//Adds Player Model
 	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board, m_pSystem);
@@ -51,6 +51,7 @@ void Application::Update(void)
 
 	//Update Entities
 	knight->Jump();
+	board->Update();
 
 	//Is the ArcBall active?
 	ArcBall();
@@ -71,6 +72,7 @@ void Application::Update(void)
 			m_pRoot = new Octant(m_uOctantLevels, 5);
 		}
 	}
+
 	//Update Entity Manager
 	m_pEntityMngr->Update();
 
