@@ -18,6 +18,7 @@ namespace Simplex
 		Tile destination; //Tile that knight is currently jumping to
 		float maxHeight = 2.0f;
 		int destinationIndex = 0;
+		matrix4 rotation;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
