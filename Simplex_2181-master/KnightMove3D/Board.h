@@ -5,7 +5,7 @@
 
 #define NUM_ROWS 4
 #define NUM_COLS 8
-#define PLACE_TIME 5
+#define PLACE_TIME 3
 
 namespace Simplex
 {
@@ -23,7 +23,7 @@ namespace Simplex
 		//Heart placement vars
 		bool placingHeart = false;
 		vector2 placeIndex = vector2(0, 0);
-		float placeTimeStep = (PLACE_TIME) / (NUM_ROWS * NUM_COLS);
+		float placeTimeStep = ((float)PLACE_TIME) / (NUM_ROWS * NUM_COLS);
 		float placeTimer = 0;
 
 	public:

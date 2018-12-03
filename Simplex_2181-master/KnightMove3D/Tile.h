@@ -1,6 +1,8 @@
 #pragma once
 #include "Definitions.h"
 
+#define MAX_HEALTH 3
+
 namespace Simplex
 {
 
@@ -39,6 +41,12 @@ namespace Simplex
 		OUTPUT: list of moves
 		*/
 		std::vector<vector2> GetMoves(); 
+		/*
+		USAGE: Checks if the tile is dead, and revives it if it is
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void CheckAndReviveTile();
 		/*
 		USAGE: Returns true if health > 0
 		ARGUMENTS: ---

@@ -39,15 +39,17 @@ void Knight::SetPosition(vector3 newPos)
 
 void Knight::Jump()
 {
+	static float fTimer = 0;//store the new timer
+	static uint uClock = system->GenClock(); //generate a new clock for that timer
+	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
+
 	//If the heart is being placed, don't jump
+	//Has to be placed after timer calculation
 	if (board->IsPlacingHeart())
 		return;
 
-	static float fTimer = 0;//store the new timer
-	static uint uClock = system->GenClock(); //generate a new clock for that timer
-	fTimer += system->GetDeltaTime(uClock); //get the delta time for that timer
-
 	//map the percentage to be between 0.0 and 1.0
+	fTimer += delta; //add that delta to the timer
 	fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
 
 	//calculate the current position

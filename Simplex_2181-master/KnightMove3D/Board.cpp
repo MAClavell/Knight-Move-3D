@@ -28,7 +28,7 @@ Board::Board(SystemSingleton* a_system)
 	}
 
 	//Create the heart
-	heart = new Heart("Minecraft//Cube.obj", "Heart");
+	heart = new Heart("KnightMove3D//heart.obj", "Heart");
 	SetRandHeartPosition();
 	placingHeart = false;
 
@@ -80,10 +80,12 @@ void Board::Update()
 			return;
 		}
 
+		//Reset tile
+		this->GetTile(placeIndex).CheckAndReviveTile();
+
 		//Set heart position and restart the clock
 		heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex); 
 		placeTimer = system->GetDeltaTime(uClock);
-		placeTimer = 0;
 	}
 }
 
@@ -122,7 +124,7 @@ void Board::HandleIfOnHeart(vector2 gridIndex)
 	if (gridIndex != heart->GetIndex())
 		return;
 
-	placeTimer = 0;
+	placeTimer = system->GetDeltaTime(uClock);
 	placingHeart = true;
 	placeIndex = vector2(0, 0);
 	heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex);
