@@ -56,7 +56,7 @@ std::vector<vector2> Tile::GetMoves()
 	moves[3] = vector2(coordinate.x + 1, coordinate.y - 2);
 	moves[4] = vector2(coordinate.x - 1, coordinate.y - 2);
 	moves[5] = vector2(coordinate.x - 2, coordinate.y + 1);
-	moves[6] = vector2(coordinate.x - 2, coordinate.y + 1);
+	moves[6] = vector2(coordinate.x - 2, coordinate.y - 1);
 	moves[7] = vector2(coordinate.x - 1, coordinate.y + 2);
 
 	//Creates a temporary vector version to return
