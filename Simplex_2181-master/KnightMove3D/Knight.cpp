@@ -129,7 +129,7 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 matrix4 Simplex::Knight::SetRotation(Tile start, Tile end)
 {
 	vector3 distance = end.GetKnightPosition() - start.GetKnightPosition();
-	float angle = glm::degrees(atan2f(distance.y, distance.x));
+	float angle = glm::degrees(atan2f(distance.x, distance.y));
 	matrix4 newRotation = ToMatrix4(glm::angleAxis(angle, vector3(0.0f, 1.0f, 0.0f)));
 	rotation = newRotation;
 	return newRotation;

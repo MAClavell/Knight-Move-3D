@@ -28,7 +28,7 @@ Board::Board(SystemSingleton* a_system)
 	}
 
 	//Create the heart
-	heart = new Heart("KnightMove3D//heart.obj", "Heart");
+	heart = new Heart("KnightMove3D\\heart.obj", "Heart");
 	SetRandHeartPosition();
 	placingHeart = false;
 
