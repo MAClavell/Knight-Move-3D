@@ -8,6 +8,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize entity manager and entity
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
+	this->uniqueID = uniqueID;
 
 	system = a_system;
 
@@ -32,7 +33,7 @@ Knight::~Knight()
 void Knight::SetPosition(vector3 newPos)
 {
 	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(matrix);
+	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
 }
 
 void Knight::Jump()
@@ -55,7 +56,7 @@ void Knight::Jump()
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
 	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex("Knight"))->SetModelMatrix(m4Model);
+	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(m4Model);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)

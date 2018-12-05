@@ -19,6 +19,7 @@ namespace Simplex
 		float maxHeight = 2.0f;
 		int destinationIndex = 0;
 		matrix4 rotation;
+		String uniqueID; //uniqueID in the entity manager
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system

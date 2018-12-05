@@ -8,6 +8,7 @@ Heart::Heart(String fileName, String uniqueID)
 {
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
+	this->uniqueID = uniqueID;
 }
 
 
@@ -21,7 +22,7 @@ void Heart::SetPosition(vector3 newPos, vector2 index)
 	gridIndex = index;
 	newPos.y += Y_INC;
 	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.5f, 0.5f, 0.5f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex("Heart"))->SetModelMatrix(matrix);
+	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
 }
 
 //Set the position of the knight

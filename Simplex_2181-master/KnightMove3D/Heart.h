@@ -8,6 +8,7 @@ namespace Simplex
 	private:
 		EntityManager * entityMngr = nullptr;
 		vector2 gridIndex;
+		String uniqueID;
 
 	public:
 		Heart(String fileName, String uniqueID);
