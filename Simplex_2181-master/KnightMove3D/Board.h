@@ -15,6 +15,7 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		Tile* tiles[NUM_ROWS][NUM_COLS];
 		Heart* heart = nullptr;
+		int score = 0;
 
 		//System vars
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -29,7 +30,7 @@ namespace Simplex
 	public:
 		Board(SystemSingleton* a_system);
 		~Board();
-
+		
 		/*
 		USAGE: Update the board
 		ARGUMENTS: ---
@@ -78,6 +79,13 @@ namespace Simplex
 		OUTPUT: If the heart is being placed
 		*/
 		bool IsPlacingHeart();
+
+		/*
+		USAGE: Get the score variable
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		int GetScore();
 
 	private:
 		/*

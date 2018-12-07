@@ -11,9 +11,16 @@ namespace Simplex
 	private:
 		EntityManager* entityMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
+		String uniqueID;
+		bool falling;
+		int fallTimer;
+
+		//System vars
+		SystemSingleton* system = nullptr;
+		uint uClock;
 
 	public:
-		Tile(String fileName, String uniqueID, vector3 position, vector2 coord);
+		Tile(String fileName, String uniqueID, vector3 position, vector2 coord, SystemSingleton* a_system);
 		Tile();
 		~Tile();
 		
@@ -47,6 +54,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void CheckAndReviveTile();
+		/*
+		USAGE: Update the tile every frame
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Update();
 		/*
 		USAGE: Returns true if health > 0
 		ARGUMENTS: ---

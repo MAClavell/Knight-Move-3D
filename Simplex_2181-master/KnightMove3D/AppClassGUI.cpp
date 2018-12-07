@@ -24,7 +24,6 @@ void Application::DrawGUI(void)
 	//Calculate the window size to know how to draw
 	NewFrame();
 
-	static ImVec4 v4Color = ImColor(255, 0, 0);
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
 	//Main Window
 	if (m_bGUI_Main)
@@ -57,11 +56,11 @@ void Application::DrawGUI(void)
 			//ImGui::Separator();
 			//ImGui::TextColored(ImColor(255, 255, 0), "Octree\n");
 
-			ImGui::TextColored(v4Color, "Knight Move 3D");
+			ImGui::TextColored(ImColor(0, 204, 255), "Knight Move 3D");
 			ImGui::Separator();
 			ImGui::Text("Collect the heart\n");
 			ImGui::Separator();
-			ImGui::Text("Score: \n");
+			ImGui::TextColored(ImColor(255, 51, 51), "Score: %d\n", board->GetScore());
 			ImGui::Separator();
 			ImGui::Text("Controls:\n");
 			ImGui::Text("   Z & X: Move\n");

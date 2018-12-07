@@ -21,8 +21,8 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
 
+	falling = false;
 	Land(origin);
-
 }
 
 //Descructor
@@ -44,7 +44,7 @@ void Knight::Jump()
 
 	//If the heart is being placed, don't jump
 	//Has to be placed after timer calculation
-	if (board->IsPlacingHeart())
+	if (board->IsPlacingHeart() || falling)
 		return;
 
 	//map the percentage to be between 0.0 and 1.0
@@ -69,6 +69,10 @@ void Knight::Jump()
 void Knight::Land(Tile target)
 {
 	//TO DO: Check if knight dies
+	if (!target.IsAlive())
+	{
+		falling = true;
+	}
 
 	//Check if the heart is on this tile
 	board->HandleIfOnHeart(target.coordinate);

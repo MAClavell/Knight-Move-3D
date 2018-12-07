@@ -20,6 +20,7 @@ namespace Simplex
 		int destinationIndex = 0;
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
+		bool falling;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
