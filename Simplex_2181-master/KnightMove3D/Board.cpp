@@ -128,6 +128,7 @@ void Board::HandleIfOnHeart(vector2 gridIndex)
 	placingHeart = true;
 	placeIndex = vector2(0, 0);
 	heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex);
+	score++;
 }
 
 //Set a new random position for the heart
@@ -153,7 +154,14 @@ Heart* Board::GetHeart()
 	return heart;
 }
 
+//Check if the board is placing the heart
 bool Board::IsPlacingHeart()
 {
 	return placingHeart;
+}
+
+//Get the score variable
+int Board::GetScore()
+{
+	return score;
 }
