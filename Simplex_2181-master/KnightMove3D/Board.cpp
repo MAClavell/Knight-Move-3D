@@ -32,6 +32,10 @@ Board::Board(SystemSingleton* a_system)
 	SetRandHeartPosition();
 	placingHeart = false;
 
+	//Create the reticule
+	/*EntityManager::GetInstance()->AddEntity("Minecraft\\Cube.obj", "Reticule");
+	EntityManager::GetInstance()->GetEntityIndex("Reticule");*/
+
 	//Instantiate heart timer vars
 	placeTimer = 0;//store the new timer
 	uClock = system->GenClock(); //generate a new clock for the timer
