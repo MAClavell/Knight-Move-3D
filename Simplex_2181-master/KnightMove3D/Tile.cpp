@@ -2,11 +2,12 @@
 using namespace Simplex;
 
 //Constructor
-Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord)
+Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, SystemSingleton* a_system)
 {
 	//Initialize entity manager and entity
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
+	this->uniqueID = uniqueID;
 
 	//Set positon
 	matrix4 m4Position = glm::translate(position);
@@ -22,6 +23,9 @@ Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord)
 	health = MAX_HEALTH;
 	coordinate.x = coord.x;
 	coordinate.y = coord.y;
+	falling = false;
+	system = a_system;
+	fallTimer = 0;
 }
 
 Tile::Tile()
@@ -39,11 +43,23 @@ vector3 Tile::GetKnightPosition()
 	return knightPosition;
 }
 
+void Tile::Update()
+{
+	if (!falling)
+		return;
+
+	fallTimer += system->GetDeltaTime(uClock);
+}
+
 //Decrement health and change color
 void Tile::Step()
 {
 	health--;
-	if (health < 0) health = 0;
+	if (health >= 0)
+	{
+		falling = true;
+		uClock = system->GenClock(); //generate a new clock for the timer
+	}
 	//TODO: change color/delete based on health
 }
 

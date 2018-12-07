@@ -22,7 +22,7 @@ Board::Board(SystemSingleton* a_system)
 			//Create the tile
 			Tile* tile = new Tile("Minecraft\\Cube.obj", "Grid(" + std::to_string(i) + "," + std::to_string(j) + ")",
 							vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset),
-							vector2(i, j));
+							vector2(i, j), system);
 			tiles[i][j] = tile;
 		}
 	}
@@ -55,6 +55,15 @@ Board::~Board()
 //Update the board
 void Board::Update()
 {
+	//Update each tile
+	for (int i = 0; i < NUM_ROWS; i++)
+	{
+		for (int j = 0; j < NUM_COLS; j++)
+		{
+			tiles[i][j]->Update();
+		}
+	}
+
 	if (!placingHeart)
 		return;
 
