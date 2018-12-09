@@ -13,6 +13,12 @@ Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, Sy
 	matrix4 m4Position = glm::translate(position);
 	entityMngr->SetModelMatrix(m4Position, -1);
 
+	//Faling vars
+	origPosition = position;
+	yPos = origPosition.y;
+	acceleration = 0;
+	velocity = 0;
+
 	//Set knight position
 	position.x += 0.5f;
 	position.y += 1;
@@ -23,9 +29,10 @@ Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, Sy
 	health = MAX_HEALTH;
 	coordinate.x = coord.x;
 	coordinate.y = coord.y;
-	falling = false;
+	falling = 0;
 	system = a_system;
 	fallTimer = 0;
+	uClock = system->GenClock(); //generate a new clock for the timer
 }
 
 Tile::Tile()
@@ -45,22 +52,52 @@ vector3 Tile::GetKnightPosition()
 
 void Tile::Update()
 {
-	if (!falling)
+	if (falling == 0)
 		return;
 
-	fallTimer += system->GetDeltaTime(uClock);
+	//Get the delta time
+	float deltaTime = system->GetDeltaTime(uClock);
+	fallTimer += deltaTime;
+	
+	//Add or subtract to acceleration
+	if(falling == 1)
+		acceleration += GRAVITY;
+	if (falling == 2)
+		acceleration -= GRAVITY;
+
+	//Apply velocity
+	velocity += acceleration * deltaTime;
+	yPos += velocity * deltaTime;
+	
+	if (falling == 1 && yPos <= FALL_TARGET)
+	{
+		yPos = FALL_TARGET;
+		falling = 0;
+	}
+	else if (falling == 2 && yPos >= origPosition.y)
+	{
+		yPos = origPosition.y;
+		falling = 0;
+	}
+
+	//Set position
+	SetYPosition(yPos);
+
+	//Reset acceleration
+	acceleration = 0;
 }
 
 //Decrement health and change color
 void Tile::Step()
 {
 	health--;
-	if (health >= 0)
+	if (health <= 0)
 	{
-		falling = true;
+		falling = 1;
+		velocity = 0;
 		uClock = system->GenClock(); //generate a new clock for the timer
 	}
-	//TODO: change color/delete based on health
+	//TODO: change color based on health
 }
 
 //Calculate and set possible moves
@@ -90,6 +127,9 @@ void Tile::CheckAndReviveTile()
 	if (!IsAlive())
 	{
 		health = MAX_HEALTH;
+		falling = 2;
+		velocity = 0;
+		uClock = system->GenClock(); //generate a new clock for the timer
 	}
 }
 
@@ -97,4 +137,11 @@ void Tile::CheckAndReviveTile()
 bool Tile::IsAlive()
 {
 	return health > 0;
+}
+
+//Set the y position of the tile
+void Tile::SetYPosition(float newY)
+{
+	matrix4 m4Position = glm::translate(vector3(origPosition.x, newY, origPosition.z));
+	entityMngr->SetModelMatrix(m4Position, entityMngr->GetEntityIndex(uniqueID));
 }

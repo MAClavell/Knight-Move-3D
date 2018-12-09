@@ -22,7 +22,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	destination = brd->GetTile(vector2(1, 2));
 
 	falling = false;
-	Land(origin);
+	Land(origin, false);
 }
 
 //Descructor
@@ -44,7 +44,7 @@ void Knight::Jump()
 
 	//If the heart is being placed, don't jump
 	//Has to be placed after timer calculation
-	if (board->IsPlacingHeart() || falling)
+	if (board->IsPlacingHeart() )//|| falling)
 		return;
 
 	//map the percentage to be between 0.0 and 1.0
@@ -52,7 +52,7 @@ void Knight::Jump()
 	fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
 
 	//calculate the current position
-	vector3 v3CurrentPos = glm::lerp(origin.GetKnightPosition(), destination.GetKnightPosition(), fPercentage);
+	vector3 v3CurrentPos = glm::lerp(origin->GetKnightPosition(), destination->GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
 	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.25f, 0.25f, 0.25f));
@@ -66,19 +66,22 @@ void Knight::Jump()
 	}
 }
 
-void Knight::Land(Tile target)
+//Called upon the end of a jump
+void Knight::Land(Tile* target, bool stepTile)
 {
 	//TO DO: Check if knight dies
-	if (!target.IsAlive())
+	if (!target->IsAlive())
 	{
 		falling = true;
+		return;
 	}
 
 	//Check if the heart is on this tile
-	board->HandleIfOnHeart(target.coordinate);
+	board->HandleIfOnHeart(target->coordinate);
 
 	//Decrement target's health
-	target.Step();
+	if(stepTile)
+		target->Step();
 
 	//Set this tile as the new origin
 	origin = target;
@@ -90,7 +93,7 @@ void Knight::Land(Tile target)
 	for (int i = 0; i < 8; i++)
 	{
 		//If the coordinate is on the board, add it to the list of valid moves
-		vector2 move = target.GetMoves()[i];
+		vector2 move = target->GetMoves()[i];
 		if (move.x >= 0 && move.x < 4 && move.y >= 0 && move.y < 8)
 		{
 			validMoves.push_back(board->GetTile(move));
@@ -131,9 +134,9 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	SetRotation(origin, destination);
 }
 
-matrix4 Simplex::Knight::SetRotation(Tile start, Tile end)
+matrix4 Simplex::Knight::SetRotation(Tile* start, Tile* end)
 {
-	vector3 distance = end.GetKnightPosition() - start.GetKnightPosition();
+	vector3 distance = end->GetKnightPosition() - start->GetKnightPosition();
 	float angle = atan2(distance.x, distance.z);
 	matrix4 newRotation = ToMatrix4(glm::angleAxis(angle, vector3(0.0f, 1.0f, 0.0f)));
 	rotation = newRotation;

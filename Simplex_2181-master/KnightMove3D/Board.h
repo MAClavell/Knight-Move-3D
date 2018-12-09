@@ -57,7 +57,7 @@ namespace Simplex
 		ARGUMENTS: Coordinates to search for
 		OUTPUT: The tile at the specified coordinates
 		*/
-		Tile GetTile(vector2 coord);
+		Tile* GetTile(vector2 coord);
 
 		/*
 		USAGE: Get if a position is the heart's index, then apply the effect

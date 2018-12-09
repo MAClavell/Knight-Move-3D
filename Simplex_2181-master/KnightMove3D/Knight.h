@@ -13,9 +13,9 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		vector2 gridIndex;
 		Board* board;
-		std::vector<Tile> validMoves;
-		Tile origin; //Tile that knight is currently jumping from
-		Tile destination; //Tile that knight is currently jumping to
+		std::vector<Tile*> validMoves;
+		Tile* origin; //Tile that knight is currently jumping from
+		Tile* destination; //Tile that knight is currently jumping to
 		float maxHeight = 2.0f;
 		int destinationIndex = 0;
 		matrix4 rotation;
@@ -46,10 +46,10 @@ namespace Simplex
 		void Jump();
 		/*
 		USAGE: Called upon the end of a jump
-		ARGUMENTS: Destination tile that has just been reached
+		ARGUMENTS: Tile* target -> Destination tile that has just been reached
 		OUTPUT: ---
 		*/
-		void Land(Tile target);
+		void Land(Tile* target, bool stepTile = true);
 		/*
 		USAGE: sets fTimeBetweenStops
 		ARGUMENTS: amount of seconds to have LERP take
@@ -67,7 +67,7 @@ namespace Simplex
 		ARGUMENTS: Origin and destination tiles
 		OUTPUT: new rotation matrix
 		*/
-		matrix4 SetRotation(Tile start, Tile end);
+		matrix4 SetRotation(Tile* start, Tile* end);
 	};
 
 }

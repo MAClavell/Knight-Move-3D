@@ -1,7 +1,9 @@
 #pragma once
 #include "Definitions.h"
 
-#define MAX_HEALTH 3
+#define MAX_HEALTH 1
+#define GRAVITY -9.8
+#define FALL_TARGET -30
 
 namespace Simplex
 {
@@ -12,8 +14,15 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
 		String uniqueID;
-		bool falling;
-		int fallTimer;
+
+
+		//Falling vars
+		short falling;
+		int fallTimer; 
+		vector3 origPosition;
+		float yPos;
+		float acceleration;
+		float velocity;
 
 		//System vars
 		SystemSingleton* system = nullptr;
@@ -66,6 +75,14 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		bool IsAlive(); 
+
+	private:
+		/*
+		USAGE: Set the Y position of the tile
+		ARGUMENTS: float newY -> the new y position
+		OUTPUT: ---
+		*/
+		void SetYPosition(float newY);
 	};
 
 }

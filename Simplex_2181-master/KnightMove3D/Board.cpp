@@ -94,7 +94,7 @@ void Board::Update()
 		}
 
 		//Reset tile
-		this->GetTile(placeIndex).CheckAndReviveTile();
+		this->GetTile(placeIndex)->CheckAndReviveTile();
 
 		//Set heart position and restart the clock
 		heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex); 
@@ -115,7 +115,7 @@ vector3 Board::GetKnightPositionOnTile(vector2 index)
 }
 
 //Get the tile at the specified coordinates
-Tile Board::GetTile(vector2 coord)
+Tile* Board::GetTile(vector2 coord)
 {
 	for (uint i = 0; i < NUM_ROWS; i++)
 	{
@@ -123,12 +123,10 @@ Tile Board::GetTile(vector2 coord)
 		{
 			if (i == coord.x && j == coord.y)
 			{
-				if(tiles[i][j])
-					return *tiles[i][j];
+				return tiles[i][j];
 			}
 		}
 	}
-
 }
 
 //Get if a position is the heart's index
