@@ -2,6 +2,9 @@
 
 using namespace Simplex;
 
+#define FALL_TARGET -30
+#define GRAVITY -9.8
+
 //Constructor
 Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system)
 {
@@ -21,8 +24,11 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
 
-	falling = false;
 	Land(origin, false);
+
+	falling = 0;
+	acceleration = 0;
+	velocity = 0;
 }
 
 //Descructor
@@ -36,6 +42,43 @@ void Knight::SetPosition(vector3 newPos)
 	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
 }
 
+//Makes the knight fall downwards
+void Knight::Fall()
+{
+	static float fTimer = 0;//store the new timer
+	static float yPos = destination->GetKnightPosition().y;
+	static uint uClock = system->GenClock(); //generate a new clock for that timer
+	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
+
+	if (falling == 2)
+		return;
+
+	//Get the delta time
+	fTimer += delta;
+
+	//Add or subtract to acceleration
+	acceleration += GRAVITY;
+
+	//Apply velocity
+	velocity += acceleration * delta;
+	yPos += velocity * delta;
+
+	//Constrain y
+	if (yPos <= FALL_TARGET)
+	{
+		yPos = FALL_TARGET;
+		falling = 2;
+	}
+
+	//Set position
+	vector3 tilePos = destination->GetKnightPosition();
+	SetPosition(vector3(tilePos.x, yPos, tilePos.z));
+
+	//Reset acceleration
+	acceleration = 0;
+}
+
+//Interpolates knight from origin tile to destination tile
 void Knight::Jump()
 {
 	static float fTimer = 0;//store the new timer
@@ -44,8 +87,14 @@ void Knight::Jump()
 
 	//If the heart is being placed, don't jump
 	//Has to be placed after timer calculation
-	if (board->IsPlacingHeart() )//|| falling)
+	if (board->IsPlacingHeart())
 		return;
+
+	if (falling > 0)
+	{
+		this->Fall();
+		return;
+	}
 
 	//map the percentage to be between 0.0 and 1.0
 	fTimer += delta; //add that delta to the timer
@@ -72,7 +121,7 @@ void Knight::Land(Tile* target, bool stepTile)
 	//TO DO: Check if knight dies
 	if (!target->IsAlive())
 	{
-		falling = true;
+		falling = 1;
 		return;
 	}
 
@@ -107,13 +156,18 @@ void Knight::Land(Tile* target, bool stepTile)
 	SetRotation(origin, destination);
 }
 
+//Sets fTimeBetweenStops
 void Simplex::Knight::SetSpeed(float newTime)
 {
 	fTimeBetweenStops = newTime;
 }
 
+//Changes destination of knight's current jump
 void Simplex::Knight::ChangeMove(bool clockwise)
 {
+	if (falling > 0)
+		return;
+
 	if (clockwise)
 	{
 		destinationIndex++;
@@ -134,6 +188,7 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	SetRotation(origin, destination);
 }
 
+//Sets rotation matrix to make knight face correct direction
 matrix4 Simplex::Knight::SetRotation(Tile* start, Tile* end)
 {
 	vector3 distance = end->GetKnightPosition() - start->GetKnightPosition();

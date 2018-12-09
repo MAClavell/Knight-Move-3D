@@ -20,13 +20,17 @@ namespace Simplex
 		int destinationIndex = 0;
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
-		bool falling;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
 		float fTimeBetweenStops = 5.0;
 		float fPercentage;
 		
+		//Falling vars
+		short falling;
+		int fallTimer;
+		float acceleration;
+		float velocity;
 
 	public:
 		Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system);
@@ -45,6 +49,12 @@ namespace Simplex
 		*/
 		void Jump();
 		/*
+		USAGE: Makes the knight fall downwards
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Fall();
+		/*
 		USAGE: Called upon the end of a jump
 		ARGUMENTS: Tile* target -> Destination tile that has just been reached
 		OUTPUT: ---
@@ -57,13 +67,13 @@ namespace Simplex
 		*/
 		void SetSpeed(float newTime);
 		/*
-		USAGE: changes destination of knight's current jump
+		USAGE: Changes destination of knight's current jump
 		ARGUMENTS: true if going to the next move clockwise
 		OUTPUT: ---
 		*/
 		void ChangeMove(bool clockwise);
 		/*
-		USAGE: sets rotation matrix to make knight face correct direction
+		USAGE: Sets rotation matrix to make knight face correct direction
 		ARGUMENTS: Origin and destination tiles
 		OUTPUT: new rotation matrix
 		*/

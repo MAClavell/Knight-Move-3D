@@ -1,6 +1,10 @@
 #include "Tile.h"
 using namespace Simplex;
 
+#define MAX_HEALTH 1
+#define GRAVITY -9.8
+#define FALL_TARGET -30
+
 //Constructor
 Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, SystemSingleton* a_system)
 {
@@ -50,6 +54,7 @@ vector3 Tile::GetKnightPosition()
 	return knightPosition;
 }
 
+//Update the tile every frame
 void Tile::Update()
 {
 	if (falling == 0)
@@ -69,6 +74,7 @@ void Tile::Update()
 	velocity += acceleration * deltaTime;
 	yPos += velocity * deltaTime;
 	
+	//Constrain y
 	if (falling == 1 && yPos <= FALL_TARGET)
 	{
 		yPos = FALL_TARGET;

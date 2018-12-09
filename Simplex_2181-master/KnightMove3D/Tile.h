@@ -1,10 +1,6 @@
 #pragma once
 #include "Definitions.h"
 
-#define MAX_HEALTH 1
-#define GRAVITY -9.8
-#define FALL_TARGET -30
-
 namespace Simplex
 {
 
@@ -14,7 +10,6 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
 		String uniqueID;
-
 
 		//Falling vars
 		short falling;
