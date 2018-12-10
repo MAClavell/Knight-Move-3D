@@ -79,6 +79,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		bool IsAlive(); 
+		/*
+		USAGE: Reset the tile
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Tile::Reset();
 	};
 
 }

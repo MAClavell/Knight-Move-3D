@@ -109,6 +109,11 @@ void Application::Display(void)
 	//end the current frame (internally swaps the front and back buffers)
 	m_pWindow->display();
 }
+void Application::ResetGame()
+{
+	board->Reset();
+	knight->Reset();
+}
 void Application::Release(void)
 {
 	//Release the octree

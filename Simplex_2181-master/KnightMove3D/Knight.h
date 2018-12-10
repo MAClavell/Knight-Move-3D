@@ -85,6 +85,13 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void SlowDown();
+		/*
+		USAGE: Reset the knight
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Knight::Reset();
+
 	};
 
 }

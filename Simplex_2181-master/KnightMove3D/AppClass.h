@@ -12,8 +12,6 @@ Date: 2017/06
 #include "Knight.h"
 #include "Board.h"
 
-
-
 namespace Simplex
 {
 	//Adding Application to the Simplex namespace
@@ -158,6 +156,12 @@ private:
 	OUTPUT: ---
 	*/
 	void Display(void);
+	/*
+	USAGE: Reset the game
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void ResetGame(void);
 	/*
 	USAGE: Clears the OpenGL screen by the specified color
 	ARGUMENTS: vector4 a_v4ClearColor = vector4(-1.0f) -> Color to clear the screen with

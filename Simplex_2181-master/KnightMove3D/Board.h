@@ -94,6 +94,13 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		int GetScore();
+		/*
+		USAGE: Reset the board
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Board::Reset();
+
 
 	private:
 		/*

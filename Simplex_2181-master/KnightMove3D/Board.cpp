@@ -194,3 +194,9 @@ int Board::GetScore()
 {
 	return score;
 }
+
+//Reset the board
+void Board::Reset()
+{
+	
+}

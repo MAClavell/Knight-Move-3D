@@ -209,3 +209,9 @@ void Simplex::Knight::SlowDown()
 {
 	speeding = false;
 }
+
+//Reset the board
+void Knight::Reset()
+{
+
+}

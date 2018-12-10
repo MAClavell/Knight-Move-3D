@@ -158,3 +158,9 @@ bool Tile::IsAlive()
 {
 	return health > 0;
 }
+
+//Reset the tile
+void Tile::Reset()
+{
+
+}
