@@ -81,6 +81,11 @@ void Knight::Fall()
 //Interpolates knight from origin tile to destination tile
 void Knight::Jump()
 {
+	if (!speeding && fTimeBetweenStops < 5.0f)
+	{
+		fTimeBetweenStops += 0.05f;
+	}
+
 	static float fTimer = 0;//store the new timer
 	static uint uClock = system->GenClock(); //generate a new clock for that timer
 	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
@@ -159,7 +164,12 @@ void Knight::Land(Tile* target, bool stepTile)
 //Sets fTimeBetweenStops
 void Simplex::Knight::SetSpeed(float newTime)
 {
-	fTimeBetweenStops = newTime;
+	speeding = true;
+
+	if (fTimeBetweenStops > newTime)
+	{
+		fTimeBetweenStops -= 0.05f;
+	}
 }
 
 //Changes destination of knight's current jump
@@ -196,4 +206,9 @@ matrix4 Simplex::Knight::SetRotation(Tile* start, Tile* end)
 	matrix4 newRotation = ToMatrix4(glm::angleAxis(angle, vector3(0.0f, 1.0f, 0.0f)));
 	rotation = newRotation;
 	return newRotation;
+}
+
+void Simplex::Knight::SlowDown()
+{
+	speeding = false;
 }

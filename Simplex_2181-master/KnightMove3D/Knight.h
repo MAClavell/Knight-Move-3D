@@ -20,6 +20,7 @@ namespace Simplex
 		int destinationIndex = 0;
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
+		bool speeding; //true if speed up is being held down
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -78,6 +79,12 @@ namespace Simplex
 		OUTPUT: new rotation matrix
 		*/
 		matrix4 SetRotation(Tile* start, Tile* end);
+		/*
+		USAGE: Sets speeding bool to false
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void SlowDown();
 	};
 
 }

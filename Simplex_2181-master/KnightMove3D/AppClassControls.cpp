@@ -151,7 +151,7 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		}
 		break;
 	case sf::Keyboard::C: //return knight to regular speed
-		knight->SetSpeed(5.0f);
+		knight->SlowDown();
 		break;
 	case sf::Keyboard::LShift:
 	case sf::Keyboard::RShift:
