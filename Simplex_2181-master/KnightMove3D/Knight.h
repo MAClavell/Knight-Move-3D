@@ -66,7 +66,7 @@ namespace Simplex
 		ARGUMENTS: amount of seconds to have LERP take
 		OUTPUT: ---
 		*/
-		void SetSpeed(float newTime);
+		void SetSpeed();
 		/*
 		USAGE: Changes destination of knight's current jump
 		ARGUMENTS: true if going to the next move clockwise

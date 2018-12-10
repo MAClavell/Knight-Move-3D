@@ -81,10 +81,10 @@ void Knight::Fall()
 //Interpolates knight from origin tile to destination tile
 void Knight::Jump()
 {
-	if (!speeding && fTimeBetweenStops < 5.0f)
+	/*if (!speeding && fTimeBetweenStops < 5.0f)
 	{
 		fTimeBetweenStops += 0.05f;
-	}
+	}*/
 
 	static float fTimer = 0;//store the new timer
 	static uint uClock = system->GenClock(); //generate a new clock for that timer
@@ -102,7 +102,8 @@ void Knight::Jump()
 	}
 
 	//map the percentage to be between 0.0 and 1.0
-	fTimer += delta; //add that delta to the timer
+	if(!speeding) fTimer += delta; //add that delta to the timer
+	else fTimer += delta * 3;
 	fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
 
 	//calculate the current position
@@ -162,14 +163,9 @@ void Knight::Land(Tile* target, bool stepTile)
 }
 
 //Sets fTimeBetweenStops
-void Simplex::Knight::SetSpeed(float newTime)
+void Simplex::Knight::SetSpeed()
 {
-	speeding = true;
-
-	if (fTimeBetweenStops > newTime)
-	{
-		fTimeBetweenStops -= 0.05f;
-	}
+	if (!speeding) speeding = true;
 }
 
 //Changes destination of knight's current jump

@@ -87,7 +87,7 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 		knight->ChangeMove(true);
 		break;
 	case sf::Keyboard::C: //increase knight's speed
-		knight->SetSpeed(3.5f);
+		knight->SetSpeed();
 		break;
 	}
 	
@@ -150,7 +150,7 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			m_pRoot = new Octant(m_uOctantLevels, 5);
 		}
 		break;
-	case sf::Keyboard::C: //return knight to regular speed
+	case sf::Keyboard::C: //returns knight to regular speed
 		knight->SlowDown();
 		break;
 	case sf::Keyboard::LShift:

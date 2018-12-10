@@ -16,6 +16,7 @@ namespace Simplex
 		Tile* tiles[NUM_ROWS][NUM_COLS];
 		Heart* heart = nullptr;
 		int score = 0;
+		Entity reticule;
 
 		//System vars
 		SystemSingleton* system = nullptr; //Singleton of the system
