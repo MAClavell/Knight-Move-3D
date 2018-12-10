@@ -1,7 +1,7 @@
 #include "Tile.h"
 using namespace Simplex;
 
-#define MAX_HEALTH 1
+#define MAX_HEALTH 3
 #define GRAVITY -9.8
 #define FALL_TARGET -30
 

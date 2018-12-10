@@ -138,6 +138,7 @@ void Board::HandleIfOnHeart(vector2 gridIndex)
 	placeTimer = system->GetDeltaTime(uClock);
 	placingHeart = true;
 	placeIndex = vector2(0, 0);
+	this->GetTile(placeIndex)->CheckAndReviveTile();
 	heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex);
 	score++;
 }
