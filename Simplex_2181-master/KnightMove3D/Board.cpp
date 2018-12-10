@@ -21,8 +21,8 @@ Board::Board(SystemSingleton* a_system)
 		{
 			//Create the tile
 			Tile* tile = new Tile("Minecraft\\Cube.obj", "Grid(" + std::to_string(i) + "," + std::to_string(j) + ")",
-							vector3(j * squareSize - xOffset, 0, i * squareSize - zOffset),
-							vector2(i, j), system);
+							vector3((j * squareSize - xOffset) + 0.5f, 0 + 0.5f, (i * squareSize - zOffset) + 0.5f),
+							vector2(i, j), C_BLUE, system);
 			tiles[i][j] = tile;
 		}
 	}
@@ -99,6 +99,19 @@ void Board::Update()
 		//Set heart position and restart the clock
 		heart->SetPosition(GetKnightPositionOnTile(placeIndex), placeIndex); 
 		placeTimer = system->GetDeltaTime(uClock);
+	}
+}
+
+//Display all tiles
+void Board::Display()
+{
+	for (uint i = 0; i < NUM_ROWS; i++)
+	{
+		for (uint j = 0; j < NUM_COLS; j++)
+		{
+			//Delete each tile
+			tiles[i][j]->Display();
+		}
 	}
 }
 

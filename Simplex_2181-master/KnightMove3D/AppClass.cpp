@@ -90,6 +90,9 @@ void Application::Display(void)
 	else
 		m_pRoot->Display(m_uOctantID);
 	
+	//Display board
+	board->Display();
+
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();
 	

@@ -7,14 +7,16 @@ namespace Simplex
 	class Tile
 	{
 	private:
-		EntityManager* entityMngr = nullptr;
+		MeshManager* meshMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
 		String uniqueID;
+		vector3 color;
 
 		//Falling vars
 		short falling;
 		int fallTimer; 
-		vector3 origPosition;
+		float origY;
+		vector3 tilePosition;
 		float yPos;
 		float acceleration;
 		float velocity;
@@ -24,7 +26,7 @@ namespace Simplex
 		uint uClock;
 
 	public:
-		Tile(String fileName, String uniqueID, vector3 position, vector2 coord, SystemSingleton* a_system);
+		Tile(String fileName, String uniqueID, vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system);
 		Tile();
 		~Tile();
 		
@@ -40,6 +42,12 @@ namespace Simplex
 		OUTPUT: A vector3 of that position
 		*/
 		vector3 GetKnightPosition();
+		/*
+		USAGE: Display the cube
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Display();
 		/*
 		USAGE: Decrement health and change color
 		ARGUMENTS: ---
@@ -70,14 +78,6 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		bool IsAlive(); 
-
-	private:
-		/*
-		USAGE: Set the Y position of the tile
-		ARGUMENTS: float newY -> the new y position
-		OUTPUT: ---
-		*/
-		void SetYPosition(float newY);
 	};
 
 }

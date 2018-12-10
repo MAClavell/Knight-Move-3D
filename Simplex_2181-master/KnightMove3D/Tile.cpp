@@ -6,27 +6,24 @@ using namespace Simplex;
 #define FALL_TARGET -30
 
 //Constructor
-Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, SystemSingleton* a_system)
+Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system)
 {
-	//Initialize entity manager and entity
-	entityMngr = EntityManager::GetInstance();
-	entityMngr->AddEntity(fileName, uniqueID);
+	//Initialize mesh manager
+	meshMngr = MeshManager::GetInstance();
 	this->uniqueID = uniqueID;
+	color = aColor;
 
 	//Set positon
-	matrix4 m4Position = glm::translate(position);
-	entityMngr->SetModelMatrix(m4Position, -1);
+	this->tilePosition = vector3(position);
 
 	//Faling vars
-	origPosition = position;
-	yPos = origPosition.y;
+	origY = position.y;
+	yPos = origY;
 	acceleration = 0;
 	velocity = 0;
 
 	//Set knight position
-	position.x += 0.5f;
-	position.y += 1;
-	position.z += 0.5f;
+	position.y += 0.5f;
 	knightPosition = vector3(position);
 
 	//Set data
@@ -47,6 +44,13 @@ Tile::Tile()
 //Destructor
 Tile::~Tile()
 { }
+
+//Display the cube
+void Tile::Display()
+{
+	matrix4 m4Position = glm::translate(tilePosition) * glm::scale(vector3(1.0f, 1.0f, 1.0f));
+	meshMngr->AddCubeToRenderList(m4Position, color, RENDER_SOLID | RENDER_WIRE);
+}
 
 //Gets the position that the knight should be on when on this tile
 vector3 Tile::GetKnightPosition()
@@ -80,14 +84,14 @@ void Tile::Update()
 		yPos = FALL_TARGET;
 		falling = 0;
 	}
-	else if (falling == 2 && yPos >= origPosition.y)
+	else if (falling == 2 && yPos >= origY)
 	{
-		yPos = origPosition.y;
+		yPos = origY;
 		falling = 0;
 	}
 
 	//Set position
-	SetYPosition(yPos);
+	tilePosition.y = yPos;
 
 	//Reset acceleration
 	acceleration = 0;
@@ -143,11 +147,4 @@ void Tile::CheckAndReviveTile()
 bool Tile::IsAlive()
 {
 	return health > 0;
-}
-
-//Set the y position of the tile
-void Tile::SetYPosition(float newY)
-{
-	matrix4 m4Position = glm::translate(vector3(origPosition.x, newY, origPosition.z));
-	entityMngr->SetModelMatrix(m4Position, entityMngr->GetEntityIndex(uniqueID));
 }

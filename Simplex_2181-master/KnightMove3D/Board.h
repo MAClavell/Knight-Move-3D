@@ -39,6 +39,13 @@ namespace Simplex
 		void Update();
 
 		/*
+		USAGE: Display all tiles
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Display();
+
+		/*
 		USAGE: Get the dimensions of the board
 		ARGUMENTS: ---
 		OUTPUT: A vector2 containing the dimensions
