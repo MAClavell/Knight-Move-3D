@@ -12,6 +12,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
 	this->uniqueID = uniqueID;
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
 
 	system = a_system;
 

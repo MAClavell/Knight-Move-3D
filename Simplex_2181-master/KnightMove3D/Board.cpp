@@ -19,10 +19,14 @@ Board::Board(SystemSingleton* a_system)
 	{
 		for (uint j = 0; j < NUM_COLS; j++)
 		{
+			//Decide color
+			vector3 color = C_BLUE_CORNFLOWER;
+			if ((i + j) % 2 == 0)
+				color = vector3(0.6f, 0.6f, 0.6f);
+
 			//Create the tile
-			Tile* tile = new Tile("Minecraft\\Cube.obj", "Grid(" + std::to_string(i) + "," + std::to_string(j) + ")",
-							vector3((j * squareSize - xOffset) + 0.5f, 0 + 0.5f, (i * squareSize - zOffset) + 0.5f),
-							vector2(i, j), C_BLUE, system);
+			Tile* tile = new Tile(vector3((j * squareSize - xOffset) + 0.5f, 0 + 0.5f, (i * squareSize - zOffset) + 0.5f),
+							vector2(i, j), color, system);
 			tiles[i][j] = tile;
 		}
 	}

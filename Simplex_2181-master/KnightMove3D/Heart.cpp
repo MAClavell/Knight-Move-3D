@@ -8,6 +8,8 @@ Heart::Heart(String fileName, String uniqueID)
 {
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
+
 	this->uniqueID = uniqueID;
 }
 

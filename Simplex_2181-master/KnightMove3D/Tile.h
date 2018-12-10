@@ -10,6 +10,7 @@ namespace Simplex
 		MeshManager* meshMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
 		String uniqueID;
+		vector3 origColor;
 		vector3 color;
 
 		//Falling vars
@@ -26,7 +27,7 @@ namespace Simplex
 		uint uClock;
 
 	public:
-		Tile(String fileName, String uniqueID, vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system);
+		Tile(vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system);
 		Tile();
 		~Tile();
 		

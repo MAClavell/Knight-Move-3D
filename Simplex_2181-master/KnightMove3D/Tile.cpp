@@ -4,13 +4,15 @@ using namespace Simplex;
 #define MAX_HEALTH 3
 #define GRAVITY -9.8
 #define FALL_TARGET -30
+#define COLOR_STEP 0.15f
 
 //Constructor
-Tile::Tile(String fileName, String uniqueID, vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system)
+Tile::Tile(vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_system)
 {
 	//Initialize mesh manager
 	meshMngr = MeshManager::GetInstance();
-	this->uniqueID = uniqueID;
+
+	origColor = aColor;
 	color = aColor;
 
 	//Set positon
@@ -107,7 +109,14 @@ void Tile::Step()
 		velocity = 0;
 		uClock = system->GenClock(); //generate a new clock for the timer
 	}
-	//TODO: change color based on health
+	else if(origColor.x - COLOR_STEP <= 0)
+	{
+		color += COLOR_STEP;
+	}
+	else
+	{
+		color -= COLOR_STEP;
+	}
 }
 
 //Calculate and set possible moves
@@ -139,6 +148,7 @@ void Tile::CheckAndReviveTile()
 		health = MAX_HEALTH;
 		falling = 2;
 		velocity = 0;
+		color = origColor;
 		uClock = system->GenClock(); //generate a new clock for the timer
 	}
 }
