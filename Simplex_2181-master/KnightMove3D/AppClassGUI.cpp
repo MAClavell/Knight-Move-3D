@@ -1,6 +1,11 @@
 #include "AppClass.h"
+
+#define GO_WINDOW_WIDTH 200
+#define GO_WINDOW_HEIGHT 80
+
 using namespace Simplex;
 ImGuiObject Application::gui;
+
 void Application::DrawGUI(void)
 {
 #pragma region Debugging Information
@@ -24,7 +29,7 @@ void Application::DrawGUI(void)
 	//Calculate the window size to know how to draw
 	NewFrame();
 
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove;
 	//Main Window
 	if (m_bGUI_Main)
 	{
@@ -67,6 +72,25 @@ void Application::DrawGUI(void)
 			ImGui::Text("   C: Speed Up\n");
 			ImGui::Separator();
 
+		}
+		ImGui::End();
+	}
+
+	//Game over screen
+	if (gameOver)
+	{
+		ImGui::SetNextWindowPos(ImVec2((m_pSystem->GetWindowWidth() / 2) - GO_WINDOW_WIDTH,
+				(m_pSystem->GetWindowHeight() / 2) - GO_WINDOW_HEIGHT),
+				ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowSize(ImVec2(GO_WINDOW_HEIGHT, GO_WINDOW_HEIGHT), ImGuiSetCond_FirstUseEver);
+		String str = m_pSystem->GetAppName() + " - GameOver";
+		ImGui::Begin(str.c_str(), (bool*)0, window_flags);
+		{
+			ImGui::TextColored(ImColor(0, 204, 255), "Game Over!");
+			ImGui::Separator();
+			ImGui::TextColored(ImColor(255, 51, 51), "Score: %d\n", board->GetScore());
+			ImGui::Text("Press 'enter' to play again");
+			ImGui::Separator();
 		}
 		ImGui::End();
 	}

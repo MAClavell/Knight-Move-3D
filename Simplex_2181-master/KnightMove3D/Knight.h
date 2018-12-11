@@ -28,10 +28,11 @@ namespace Simplex
 		float fPercentage;
 		
 		//Falling vars
+		float yPos;
 		short falling;
-		int fallTimer;
 		float acceleration;
 		float velocity;
+		uint uClock;
 
 	public:
 		Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system);
@@ -91,7 +92,12 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void Knight::Reset();
-
+		/*
+		USAGE: Check if the knight is alive
+		ARGUMENTS: ---
+		OUTPUT: bool if the knight is alive
+		*/
+		bool Knight::IsAlive();
 	};
 
 }

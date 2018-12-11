@@ -89,6 +89,10 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	case sf::Keyboard::C: //increase knight's speed
 		knight->SetSpeed();
 		break;
+	case sf::Keyboard::Return:
+		if (gameOver)
+			ResetGame();
+		break;
 	}
 	
 	//gui
@@ -105,50 +109,6 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 	default: break;
 	case sf::Keyboard::Escape:
 		m_bRunning = false;
-		break;
-	case sf::Keyboard::F1:
-		m_pCameraMngr->SetCameraMode(CAM_PERSP);
-		break;
-	case sf::Keyboard::F2:
-		m_pCameraMngr->SetCameraMode(CAM_ORTHO_Z);
-		break;
-	case sf::Keyboard::F3:
-		m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
-		break;
-	case sf::Keyboard::F4:
-		m_pCameraMngr->SetCameraMode(CAM_ORTHO_X);
-		break;
-	case sf::Keyboard::F:
-		bFPSControl = !bFPSControl;
-		m_pCameraMngr->SetFPS(bFPSControl);
-		break;
-	case sf::Keyboard::PageUp:
-		++m_uOctantID;
-		if (m_uOctantID >= m_pRoot->GetOctantCount())
-			m_uOctantID = - 1;
-		break;
-	case sf::Keyboard::PageDown:
-		--m_uOctantID;
-		if (m_uOctantID >= m_pRoot->GetOctantCount())
-			m_uOctantID = - 1;
-		break;
-	case sf::Keyboard::Add:
-		if (m_uOctantLevels < 4)
-		{
-			m_pEntityMngr->ClearDimensionSetAll();
-			++m_uOctantLevels;
-			SafeDelete(m_pRoot);
-			m_pRoot = new Octant(m_uOctantLevels, 5);
-		}
-		break;
-	case sf::Keyboard::Subtract:
-		if (m_uOctantLevels > 0)
-		{
-			m_pEntityMngr->ClearDimensionSetAll();
-			--m_uOctantLevels;
-			SafeDelete(m_pRoot);
-			m_pRoot = new Octant(m_uOctantLevels, 5);
-		}
 		break;
 	case sf::Keyboard::C: //returns knight to regular speed
 		knight->SlowDown();
@@ -426,23 +386,23 @@ void Application::ProcessKeyboard(void)
 	if (bMultiplier)
 		fMultiplier = 5.0f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_pCameraMngr->MoveForward(m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	//	m_pCameraMngr->MoveForward(m_fMovementSpeed * fMultiplier);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		m_pCameraMngr->MoveForward(-m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	//	m_pCameraMngr->MoveForward(-m_fMovementSpeed * fMultiplier);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_pCameraMngr->MoveSideways(-m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	//	m_pCameraMngr->MoveSideways(-m_fMovementSpeed * fMultiplier);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_pCameraMngr->MoveSideways(m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	//	m_pCameraMngr->MoveSideways(m_fMovementSpeed * fMultiplier);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		m_pCameraMngr->MoveVertical(-m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	//	m_pCameraMngr->MoveVertical(-m_fMovementSpeed * fMultiplier);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		m_pCameraMngr->MoveVertical(m_fMovementSpeed * fMultiplier);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	//	m_pCameraMngr->MoveVertical(m_fMovementSpeed * fMultiplier);
 #pragma endregion
 }
 //Joystick

@@ -9,7 +9,6 @@ namespace Simplex
 	private:
 		MeshManager* meshMngr = nullptr;
 		vector3 knightPosition; //the position the knight is placed on
-		String uniqueID;
 		vector3 origColor;
 		vector3 color;
 

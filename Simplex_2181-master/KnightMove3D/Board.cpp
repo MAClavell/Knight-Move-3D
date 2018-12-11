@@ -198,5 +198,17 @@ int Board::GetScore()
 //Reset the board
 void Board::Reset()
 {
-	
+	//Reset board vars
+	score = 0;
+
+	//Reset tiles
+	for (uint i = 0; i < NUM_ROWS; i++)
+	{
+		for (uint j = 0; j < NUM_COLS; j++)
+		{
+			tiles[i][j]->Reset();
+		}
+	}
+
+	SetRandHeartPosition();
 }

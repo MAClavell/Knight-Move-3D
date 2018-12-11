@@ -107,7 +107,7 @@ void Tile::Step()
 	{
 		falling = 1;
 		velocity = 0;
-		uClock = system->GenClock(); //generate a new clock for the timer
+		system->GetDeltaTime(uClock); //generate a new clock for the timer
 	}
 	else if(origColor.x - COLOR_STEP <= 0)
 	{
@@ -162,5 +162,8 @@ bool Tile::IsAlive()
 //Reset the tile
 void Tile::Reset()
 {
-
+	health = MAX_HEALTH;
+	falling = 2;
+	velocity = 0;
+	color = origColor;
 }

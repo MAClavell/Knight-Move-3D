@@ -27,6 +27,8 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 
 	Land(origin, false);
 
+	//Falling vars
+	uClock = system->GenClock();
 	falling = 0;
 	acceleration = 0;
 	velocity = 0;
@@ -46,16 +48,10 @@ void Knight::SetPosition(vector3 newPos)
 //Makes the knight fall downwards
 void Knight::Fall()
 {
-	static float fTimer = 0;//store the new timer
-	static float yPos = destination->GetKnightPosition().y;
-	static uint uClock = system->GenClock(); //generate a new clock for that timer
 	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
 
 	if (falling == 2)
 		return;
-
-	//Get the delta time
-	fTimer += delta;
 
 	//Add or subtract to acceleration
 	acceleration += GRAVITY;
@@ -129,6 +125,8 @@ void Knight::Land(Tile* target, bool stepTile)
 	if (!target->IsAlive())
 	{
 		falling = 1;
+		yPos = destination->GetKnightPosition().y;
+		system->GetDeltaTime(uClock); //reset the clock
 		return;
 	}
 
@@ -213,5 +211,20 @@ void Simplex::Knight::SlowDown()
 //Reset the board
 void Knight::Reset()
 {
+	falling = 0;
+	gridIndex = vector2(0, 0);
 
+	//Set initial position
+	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
+
+	//ReInitialize lerp values
+	origin = board->GetTile(vector2(0, 0));
+	destination = board->GetTile(vector2(1, 2));
+	Land(origin, false);
+}
+
+//Check if the knight is alive
+bool Knight::IsAlive()
+{
+	return falling != 2;
 }
