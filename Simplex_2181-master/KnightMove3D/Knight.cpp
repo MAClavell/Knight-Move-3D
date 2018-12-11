@@ -159,6 +159,7 @@ void Knight::Land(Tile* target, bool stepTile)
 	destinationIndex = 0;
 
 	SetRotation(origin, destination);
+	board->MoveReticule(destination->GetKnightPosition());
 }
 
 //Sets fTimeBetweenStops
@@ -191,6 +192,7 @@ void Simplex::Knight::ChangeMove(bool clockwise)
 	destination = validMoves[destinationIndex];
 
 	SetRotation(origin, destination);
+	board->MoveReticule(destination->GetKnightPosition());
 }
 
 //Sets rotation matrix to make knight face correct direction

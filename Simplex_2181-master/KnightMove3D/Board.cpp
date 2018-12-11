@@ -20,9 +20,9 @@ Board::Board(SystemSingleton* a_system)
 		for (uint j = 0; j < NUM_COLS; j++)
 		{
 			//Decide color
-			vector3 color = C_BLUE_CORNFLOWER;
+			vector3 color = C_MAGENTA;
 			if ((i + j) % 2 == 0)
-				color = vector3(0.6f, 0.6f, 0.6f);
+				color = C_BLUE_CORNFLOWER;
 
 			//Create the tile
 			Tile* tile = new Tile(vector3((j * squareSize - xOffset) + 0.5f, 0 + 0.5f, (i * squareSize - zOffset) + 0.5f),
@@ -35,10 +35,6 @@ Board::Board(SystemSingleton* a_system)
 	heart = new Heart("KnightMove3D\\heart.obj", "Heart");
 	SetRandHeartPosition();
 	placingHeart = false;
-
-	//Create the reticule
-	/*EntityManager::GetInstance()->AddEntity("Minecraft\\Cube.obj", "Reticule");
-	EntityManager::GetInstance()->GetEntityIndex("Reticule");*/
 
 	//Instantiate heart timer vars
 	placeTimer = 0;//store the new timer
@@ -117,6 +113,8 @@ void Board::Display()
 			tiles[i][j]->Display();
 		}
 	}
+
+	DisplayReticule();
 }
 
 //Get the dimensions of the board
@@ -211,4 +209,28 @@ void Board::Reset()
 	}
 
 	SetRandHeartPosition();
+}
+
+void Simplex::Board::MoveReticule(vector3 pos)
+{
+	reticulePosition = pos;
+}
+
+void Simplex::Board::DisplayReticule()
+{
+	//top left
+	matrix4 m4Reticule = glm::translate(reticulePosition - vector3(0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
+
+	//bottom right
+	m4Reticule = glm::translate(reticulePosition + vector3(0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
+
+	//bottom left
+	m4Reticule = glm::translate(reticulePosition + vector3(-0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
+
+	//top right
+	m4Reticule = glm::translate(reticulePosition + vector3(0.4f, 0.0f, -0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
 }

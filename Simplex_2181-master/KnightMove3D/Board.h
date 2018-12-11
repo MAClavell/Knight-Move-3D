@@ -16,7 +16,7 @@ namespace Simplex
 		Tile* tiles[NUM_ROWS][NUM_COLS];
 		Heart* heart = nullptr;
 		int score = 0;
-		//Entity reticule;
+		vector3 reticulePosition;
 
 		//System vars
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -100,7 +100,18 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void Board::Reset();
-
+		/*
+		USAGE: Set the position of the reticule
+		ARGUMENTS: position to place reticule
+		OUTPUT: ---
+		*/
+		void Board::MoveReticule(vector3 pos);
+		/*
+		USAGE: Draws the reticule shape with cubes
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Board::DisplayReticule();
 
 	private:
 		/*
