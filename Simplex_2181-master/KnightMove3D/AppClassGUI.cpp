@@ -1,6 +1,6 @@
 #include "AppClass.h"
 
-#define GO_WINDOW_WIDTH 200
+#define GO_WINDOW_WIDTH 300
 #define GO_WINDOW_HEIGHT 80
 
 using namespace Simplex;
@@ -65,7 +65,9 @@ void Application::DrawGUI(void)
 			ImGui::Separator();
 			ImGui::Text("Collect the heart\n");
 			ImGui::Separator();
-			ImGui::TextColored(ImColor(255, 51, 51), "Score: %d\n", board->GetScore());
+			ImGui::TextColored(ImColor(20, 150, 240), "Score: %d\n", board->GetScore());
+			ImGui::TextColored(ImColor(255, 255, 0), "Combo: %d\n", knight->GetCombo());
+			ImGui::TextColored(ImColor(255, 51, 51), "Hearts Collected: %d\n", board->GetHeartsCollected());
 			ImGui::Separator();
 			ImGui::Text("Controls:\n");
 			ImGui::Text("   Z & X: Move\n");
@@ -86,10 +88,11 @@ void Application::DrawGUI(void)
 		String str = m_pSystem->GetAppName() + " - GameOver";
 		ImGui::Begin(str.c_str(), (bool*)0, window_flags);
 		{
-			ImGui::TextColored(ImColor(0, 204, 255), "Game Over!");
+			ImGui::TextColored(ImColor(0, 204, 255), "Game Over!\n");
 			ImGui::Separator();
-			ImGui::TextColored(ImColor(255, 51, 51), "Score: %d\n", board->GetScore());
-			ImGui::Text("Press 'enter' to play again");
+			ImGui::TextColored(ImColor(20, 150, 240), "Total Score:\n");
+			ImGui::TextColored(ImColor(20, 150, 240), "%d\n", board->GetTotalScore());
+			ImGui::Text("Press 'enter' to play again\n");
 			ImGui::Separator();
 		}
 		ImGui::End();

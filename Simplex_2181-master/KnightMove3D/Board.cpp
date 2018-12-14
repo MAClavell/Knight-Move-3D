@@ -35,6 +35,7 @@ Board::Board(SystemSingleton* a_system)
 	heart = new Heart("KnightMove3D\\heart.obj", "Heart");
 	SetRandHeartPosition();
 	placingHeart = false;
+	heartsCollected = 0;
 
 	//Instantiate heart timer vars
 	placeTimer = 0;//store the new timer
@@ -150,6 +151,7 @@ void Board::HandleIfOnHeart(vector2 gridIndex)
 	if (gridIndex != heart->GetIndex())
 		return;
 
+	heartsCollected++;
 	placeTimer = system->GetDeltaTime(uClock);
 	placingHeart = true;
 	placeIndex = vector2(0, 0);
@@ -187,6 +189,12 @@ bool Board::IsPlacingHeart()
 	return placingHeart;
 }
 
+//Adds to the current score
+void Simplex::Board::AddToScore(float addition)
+{
+	score += addition;
+}
+
 //Get the score variable
 int Board::GetScore()
 {
@@ -198,6 +206,7 @@ void Board::Reset()
 {
 	//Reset board vars
 	score = 0;
+	heartsCollected = 0;
 
 	//Reset tiles
 	for (uint i = 0; i < NUM_ROWS; i++)
@@ -233,4 +242,15 @@ void Simplex::Board::DisplayReticule()
 	//top right
 	m4Reticule = glm::translate(reticulePosition + vector3(0.4f, 0.0f, -0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
 	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
+}
+
+//Get the number of hearts landed on
+int Board::GetHeartsCollected()
+{
+	return heartsCollected;
+}
+
+int Board::GetTotalScore()
+{
+	return score * (heartsCollected + 1);
 }

@@ -21,6 +21,7 @@ namespace Simplex
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
 		bool speeding; //true if speed up is being held down
+		int combo;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -98,6 +99,12 @@ namespace Simplex
 		OUTPUT: bool if the knight is alive
 		*/
 		bool Knight::IsAlive();
+		/*
+		USAGE: Get the current combo of the knight
+		ARGUMENTS: ---
+		OUTPUT: float the current combo
+		*/
+		int Knight::GetCombo();
 	};
 
 }

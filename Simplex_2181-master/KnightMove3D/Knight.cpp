@@ -13,7 +13,6 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	entityMngr->AddEntity(fileName, uniqueID);
 	this->uniqueID = uniqueID;
 	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
-
 	system = a_system;
 
 	//Add board and set initial position
@@ -24,8 +23,10 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_
 	//Initialize lerp values
 	origin = brd->GetTile(vector2(0, 0));
 	destination = brd->GetTile(vector2(1, 2));
-
 	Land(origin, false);
+
+	//Scoring
+	combo = 0;
 
 	//Falling vars
 	uClock = system->GenClock();
@@ -100,7 +101,11 @@ void Knight::Jump()
 
 	//map the percentage to be between 0.0 and 1.0
 	if(!speeding) fTimer += delta; //add that delta to the timer
-	else fTimer += delta * 3;
+	else
+	{
+		fTimer += delta * 7;
+		board->AddToScore(delta * 10);
+	}
 	fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
 
 	//calculate the current position
@@ -136,6 +141,31 @@ void Knight::Land(Tile* target, bool stepTile)
 	//Decrement target's health
 	if(stepTile)
 		target->Step();
+	 
+	//Add the combo if this tile is dead
+	if (!target->IsAlive())
+	{
+		//Combo increments based on the original knight move
+		//The more tiles you break, the more the combo increases
+		//Caps out at +2000
+		if (combo < 350)
+			combo += 50;
+		else if (combo < 1000)
+			combo = 1000;
+		else if (combo < 1600)
+			combo += 100;
+		else if (combo < 3000)
+			combo = 3000;
+		else if (combo < 6000)
+			combo += 500;
+		else if (combo < 10000)
+			combo = 10000;
+		else
+			combo += 2000;
+
+		board->AddToScore(combo);
+	}
+	else combo = 0;
 
 	//Set this tile as the new origin
 	origin = target;
@@ -214,6 +244,7 @@ void Simplex::Knight::SlowDown()
 void Knight::Reset()
 {
 	falling = 0;
+	combo = 0;
 	gridIndex = vector2(0, 0);
 
 	//Set initial position
@@ -229,4 +260,10 @@ void Knight::Reset()
 bool Knight::IsAlive()
 {
 	return falling != 2;
+}
+
+//Get the current combo of the knight
+int Knight::GetCombo()
+{
+	return combo;
 }

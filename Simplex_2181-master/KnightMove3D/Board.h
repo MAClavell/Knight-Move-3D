@@ -15,7 +15,7 @@ namespace Simplex
 		EntityManager* entityMngr = nullptr;
 		Tile* tiles[NUM_ROWS][NUM_COLS];
 		Heart* heart = nullptr;
-		int score = 0;
+		float score = 0;
 		vector3 reticulePosition;
 
 		//System vars
@@ -27,6 +27,7 @@ namespace Simplex
 		vector2 placeIndex = vector2(0, 0);
 		float placeTimeStep = ((float)PLACE_TIME) / (NUM_ROWS * NUM_COLS);
 		float placeTimer = 0;
+		int heartsCollected;
 
 	public:
 		Board(SystemSingleton* a_system);
@@ -69,7 +70,7 @@ namespace Simplex
 
 		/*
 		USAGE: Get if a position is the heart's index, then apply the effect
-		ARGUMENTS: The index to check
+		ARGUMENTS: vector2 gridIndex -> the index to check
 		OUTPUT: ---
 		*/
 		void HandleIfOnHeart(vector2 gridIndex);
@@ -87,13 +88,30 @@ namespace Simplex
 		OUTPUT: If the heart is being placed
 		*/
 		bool IsPlacingHeart();
-
 		/*
-		USAGE: Get the score variable
-		ARGUMENTS: ---
+		USAGE: Adds to the current score
+		ARGUMENTS: float addition -> the number to add to the score  
 		OUTPUT: ---
 		*/
+		void AddToScore(float addition);
+		/*
+		USAGE: Get the score variable as an int
+		ARGUMENTS: ---
+		OUTPUT: int version of the score
+		*/
 		int GetScore();
+		/*
+		USAGE: Get total endgame score
+		ARGUMENTS: ---
+		OUTPUT: int the total calculated
+		*/
+		int GetTotalScore();
+		/*
+		USAGE: Get the number of hearts collected
+		ARGUMENTS: ---
+		OUTPUT: int number of hearts collected
+		*/
+		int GetHeartsCollected();
 		/*
 		USAGE: Reset the board
 		ARGUMENTS: ---
