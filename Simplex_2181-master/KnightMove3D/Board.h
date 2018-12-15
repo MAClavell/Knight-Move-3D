@@ -17,6 +17,7 @@ namespace Simplex
 		Heart* heart = nullptr;
 		float score = 0;
 		vector3 reticulePosition;
+		vector3 enemyReticulePosition;
 
 		//System vars
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -125,11 +126,23 @@ namespace Simplex
 		*/
 		void Board::MoveReticule(vector3 pos);
 		/*
+		USAGE: Set the position of the reticule
+		ARGUMENTS: position to place reticule
+		OUTPUT: ---
+		*/
+		void Board::MoveEnemyReticule(vector3 pos);
+		/*
 		USAGE: Draws the reticule shape with cubes
 		ARGUMENTS: ---
 		OUTPUT: ---
 		*/
 		void Board::DisplayReticule();
+		/*
+		USAGE: Draws the enemy reticule shape with cubes
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Board::DisplayEnemyReticule();
 
 	private:
 		/*

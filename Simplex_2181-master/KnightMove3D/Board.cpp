@@ -116,6 +116,7 @@ void Board::Display()
 	}
 
 	DisplayReticule();
+	DisplayEnemyReticule();
 }
 
 //Get the dimensions of the board
@@ -225,6 +226,11 @@ void Simplex::Board::MoveReticule(vector3 pos)
 	reticulePosition = pos;
 }
 
+void Simplex::Board::MoveEnemyReticule(vector3 pos)
+{
+	enemyReticulePosition = pos;
+}
+
 void Simplex::Board::DisplayReticule()
 {
 	//top left
@@ -242,6 +248,25 @@ void Simplex::Board::DisplayReticule()
 	//top right
 	m4Reticule = glm::translate(reticulePosition + vector3(0.4f, 0.0f, -0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
 	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_CYAN, RENDER_SOLID);
+}
+
+void Simplex::Board::DisplayEnemyReticule()
+{
+	//top left
+	matrix4 m4Reticule = glm::translate(enemyReticulePosition - vector3(0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_RED, RENDER_SOLID);
+
+	//bottom right
+	m4Reticule = glm::translate(enemyReticulePosition + vector3(0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_RED, RENDER_SOLID);
+
+	//bottom left
+	m4Reticule = glm::translate(enemyReticulePosition + vector3(-0.4f, 0.0f, 0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_RED, RENDER_SOLID);
+
+	//top right
+	m4Reticule = glm::translate(enemyReticulePosition + vector3(0.4f, 0.0f, -0.4f)) * glm::scale(vector3(0.2f, 0.2f, 0.2f));
+	MeshManager::GetInstance()->AddCubeToRenderList(m4Reticule, C_RED, RENDER_SOLID);
 }
 
 //Get the number of hearts landed on

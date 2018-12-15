@@ -153,7 +153,7 @@ void Rook::Land(Tile* target, bool stepTile)
 	destinationIndex = 0;
 
 	SetRotation(origin, destination);
-	board->MoveReticule(destination->GetKnightPosition());
+	board->MoveEnemyReticule(destination->GetKnightPosition());
 }
 
 //Sets fTimeBetweenStops
@@ -186,7 +186,7 @@ void Simplex::Rook::ChangeMove(bool clockwise)
 	destination = validMoves[destinationIndex];
 
 	SetRotation(origin, destination);
-	board->MoveReticule(destination->GetKnightPosition());
+	board->MoveEnemyReticule(destination->GetKnightPosition());
 }
 
 //Sets rotation matrix to make Rook face correct direction
@@ -248,22 +248,20 @@ Tile * Simplex::Rook::ChooseMove(Tile * target)
 	{
 	case 0:
 		newCoord = vector2(target->coordinate.x, target->coordinate.y - spaces);
-		return board->GetTile(newCoord);
 		break;
 	case 1:
 		newCoord = vector2(target->coordinate.x + spaces, target->coordinate.y);
-		return board->GetTile(newCoord);
 		break;
 	case 2:
 		newCoord = vector2(target->coordinate.x, target->coordinate.y + spaces);
-		return board->GetTile(newCoord);
 		break;
 	case 3:
 		newCoord = vector2(target->coordinate.x - spaces, target->coordinate.y);
-		return board->GetTile(newCoord);
 		break;
 	default:
 		return target;
 		break;
 	}
+
+	return board->GetTile(newCoord);
 }
