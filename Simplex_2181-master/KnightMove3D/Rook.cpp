@@ -112,7 +112,7 @@ void Rook::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin->GetKnightPosition(), destination->GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.1f, 0.08f, 0.1f));
 	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(m4Model);
 
 	//if we are done with this route
