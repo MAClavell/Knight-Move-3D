@@ -22,6 +22,9 @@ void Application::InitVariables(void)
 
 	//Adds Player Model
 	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board, m_pSystem);
+
+	//Adds Enemy Model
+	rook = new Rook("KnightMove3D\\rook.obj", "Rook", board, m_pSystem);
 	
 	//Set control variables
 	gameOver = false;
@@ -35,6 +38,7 @@ void Application::Update(void)
 
 	//Update Entities
 	knight->Jump();
+	rook->Jump();
 	board->Update();
 
 	//Display screen
@@ -109,6 +113,7 @@ void Application::Release(void)
 	//Release the octree
 	SafeDelete(m_pRoot);
 	SafeDelete(knight);
+	SafeDelete(rook);
 	SafeDelete(board);
 
 	//release GUI

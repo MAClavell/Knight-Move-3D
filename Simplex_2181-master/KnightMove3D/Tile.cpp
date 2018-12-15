@@ -36,6 +36,22 @@ Tile::Tile(vector3 position, vector2 coord, vector3 aColor, SystemSingleton* a_s
 	system = a_system;
 	fallTimer = 0;
 	uClock = system->GenClock(); //generate a new clock for the timer
+
+	//Set moves for knight
+	moves[0] = vector2(coordinate.x + 1, coordinate.y + 2);
+	moves[1] = vector2(coordinate.x + 2, coordinate.y + 1);
+	moves[2] = vector2(coordinate.x + 2, coordinate.y - 1);
+	moves[3] = vector2(coordinate.x + 1, coordinate.y - 2);
+	moves[4] = vector2(coordinate.x - 1, coordinate.y - 2);
+	moves[5] = vector2(coordinate.x - 2, coordinate.y - 1);
+	moves[6] = vector2(coordinate.x - 2, coordinate.y + 1);
+	moves[7] = vector2(coordinate.x - 1, coordinate.y + 2);
+
+	//Set moves for rook
+	rookMoves[0] = coordinate.y;
+	rookMoves[1] = 3 - coordinate.x;
+	rookMoves[2] = 7 - coordinate.y;
+	rookMoves[3] = coordinate.x;
 }
 
 Tile::Tile()
@@ -119,23 +135,24 @@ void Tile::Step()
 	}
 }
 
-//Calculate and set possible moves
+//Return possible moves for knight
 std::vector<vector2> Tile::GetMoves()
 {
-	moves[0] = vector2(coordinate.x + 1, coordinate.y + 2);
-	moves[1] = vector2(coordinate.x + 2, coordinate.y + 1);
-	moves[2] = vector2(coordinate.x + 2, coordinate.y - 1);
-	moves[3] = vector2(coordinate.x + 1, coordinate.y - 2);
-	moves[4] = vector2(coordinate.x - 1, coordinate.y - 2);
-	moves[5] = vector2(coordinate.x - 2, coordinate.y - 1);
-	moves[6] = vector2(coordinate.x - 2, coordinate.y + 1);
-	moves[7] = vector2(coordinate.x - 1, coordinate.y + 2);
-
-	//Creates a temporary vector version to return
 	std::vector<vector2> tempList;
 	for (int i = 0; i < 8; i++)
 	{
 		tempList.push_back(moves[i]);
+	}
+	return tempList;
+}
+
+//Return directions for rook
+std::vector<int> Tile::GetRookMoves()
+{
+	std::vector<int> tempList;
+	for (int i = 0; i < 4; i++)
+	{
+		tempList.push_back(rookMoves[i]);
 	}
 	return tempList;
 }

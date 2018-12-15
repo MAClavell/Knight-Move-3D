@@ -10,6 +10,7 @@ Date: 2017/06
 #include "ControllerConfiguration.h"
 #include "imgui\ImGuiObject.h"
 #include "Knight.h"
+#include "Rook.h"
 #include "Board.h"
 
 namespace Simplex
@@ -25,6 +26,7 @@ class Application
 
 	Board* board = nullptr;
 	Knight* knight = nullptr;
+	Rook* rook = nullptr;
 	bool gameOver;
 
 private:

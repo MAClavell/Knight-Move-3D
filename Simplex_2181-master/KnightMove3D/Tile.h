@@ -34,6 +34,7 @@ namespace Simplex
 		uint health;
 		vector2 coordinate; //this tile's coordinates
 		vector2 moves[8]; //array of possible moves
+		int rookMoves[4]; //array of possible moves for rook
 
 		//Public Member Functions
 		/*
@@ -60,6 +61,12 @@ namespace Simplex
 		OUTPUT: list of moves
 		*/
 		std::vector<vector2> GetMoves(); 
+		/*
+		USAGE: Returns list of number of spaces to move in each direction to reach the end of the board
+		ARGUMENTS: ---
+		OUTPUT: 0: num spaces up, 1: num spaces right, 2: num spaces down, 3: num spaces left
+		*/
+		std::vector<int> GetRookMoves();
 		/*
 		USAGE: Checks if the tile is dead, and revives it if it is
 		ARGUMENTS: ---
