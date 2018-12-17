@@ -42,7 +42,7 @@ Rook::~Rook()
 //Set the position of the Rook
 void Rook::SetPosition(vector3 newPos)
 {
-	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.1f, 0.08f, 0.1f));
 	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
 }
 
