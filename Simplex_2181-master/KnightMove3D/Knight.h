@@ -20,6 +20,8 @@ namespace Simplex
 		int destinationIndex = 0;
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
+		uint rookEntityIndex;
+		uint entityIndex;
 		bool speeding; //true if speed up is being held down
 		int combo;
 
@@ -36,7 +38,7 @@ namespace Simplex
 		uint uClock;
 
 	public:
-		Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system);
+		Knight(String fileName, String uniqueID, Board* brd, uint rookEntityIndex, SystemSingleton* a_system);
 		~Knight();
 
 		/*

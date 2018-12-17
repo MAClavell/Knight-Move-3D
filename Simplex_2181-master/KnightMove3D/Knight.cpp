@@ -6,13 +6,15 @@ using namespace Simplex;
 #define GRAVITY -9.8
 
 //Constructor
-Knight::Knight(String fileName, String uniqueID, Board* brd, SystemSingleton* a_system)
+Knight::Knight(String fileName, String uniqueID, Board* brd, uint rookEntityIndex, SystemSingleton* a_system)
 {
 	//Initialize entity manager and entity
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
 	this->uniqueID = uniqueID;
-	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
+	entityIndex = entityMngr->GetEntityIndex(uniqueID);
+	this->rookEntityIndex = rookEntityIndex;
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(true);
 	system = a_system;
 
 	//Add board and set initial position
@@ -42,8 +44,9 @@ Knight::~Knight()
 //Set the position of the knight
 void Knight::SetPosition(vector3 newPos)
 {
-	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
+	matrix4 matrix = glm::translate(newPos) * rotation;// *glm::scale(vector3(0.25f, 0.25f, 0.25f));
+	entityMngr->GetRigidBody(uniqueID)->SetModelMatrix(matrix);
+	entityMngr->SetModelMatrix(matrix, uniqueID);
 }
 
 //Makes the knight fall downwards
@@ -79,11 +82,6 @@ void Knight::Fall()
 //Interpolates knight from origin tile to destination tile
 void Knight::Jump()
 {
-	/*if (!speeding && fTimeBetweenStops < 5.0f)
-	{
-		fTimeBetweenStops += 0.05f;
-	}*/
-
 	static float fTimer = 0;//store the new timer
 	static uint uClock = system->GenClock(); //generate a new clock for that timer
 	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
@@ -99,6 +97,13 @@ void Knight::Jump()
 		return;
 	}
 
+	//Detect collisions with the rook
+	if (entityMngr->GetEntity(entityIndex)->IsColliding(entityMngr->GetEntity(rookEntityIndex)))
+	{
+		//TODO do something with collisions
+		std::cout << "colliding" << std::endl;
+	}
+
 	//map the percentage to be between 0.0 and 1.0
 	if(!speeding) fTimer += delta; //add that delta to the timer
 	else
@@ -112,8 +117,7 @@ void Knight::Jump()
 	vector3 v3CurrentPos = glm::lerp(origin->GetKnightPosition(), destination->GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.25f, 0.25f, 0.25f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(m4Model);
+	SetPosition(v3CurrentPos);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)

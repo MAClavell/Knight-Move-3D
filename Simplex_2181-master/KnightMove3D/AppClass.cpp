@@ -14,21 +14,22 @@ void Application::InitVariables(void)
 	m_pLightMngr->SetPosition(vector3(0.0f, 10.0f, 0.0f), 1); //set the position of first light (0 is reserved for ambient light)
 	m_pLightMngr->SetIntensity(2, 1);
 
-	m_uOctantLevels = 2;
-	m_pRoot = new Octant(m_uOctantLevels, 5);
-	
+	m_bUsingPhysics = true; //Are we using physics in the project?
+
 	//Create the board
 	board = new Board(m_pSystem);
 
-	//Adds Player Model
-	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board, m_pSystem);
-
 	//Adds Enemy Model
 	rook = new Rook("KnightMove3D\\rook.obj", "Rook", board, m_pSystem);
+
+	//Adds Player Model
+	knight = new Knight("KnightMove3D\\knight.obj", "Knight", board, m_pEntityMngr->GetEntityIndex("Rook"), m_pSystem);
 	
 	//Set control variables
 	gameOver = false;
 
+	m_uOctantLevels = 2;
+	m_pRoot = new Octant(m_uOctantLevels, 5);
 	m_pEntityMngr->Update();
 }
 void Application::Update(void)
@@ -54,17 +55,14 @@ void Application::Update(void)
 	CameraRotation();
 
 	//Reconstructing the Octree each half a second
-	if (m_bUsingPhysics)
+	static uint nClock = m_pSystem->GenClock();
+	static bool bStarted = false;
+	if (m_pSystem->IsTimerDone(nClock) || !bStarted)
 	{
-		static uint nClock = m_pSystem->GenClock();
-		static bool bStarted = false;
-		if (m_pSystem->IsTimerDone(nClock) || !bStarted)
-		{
-			bStarted = true;
-			m_pSystem->StartTimerOnClock(0.5, nClock);
-			SafeDelete(m_pRoot);
-			m_pRoot = new Octant(m_uOctantLevels, 5);
-		}
+		bStarted = true;
+		m_pSystem->StartTimerOnClock(0.5, nClock);
+		SafeDelete(m_pRoot);
+		m_pRoot = new Octant(m_uOctantLevels, 5);
 	}
 
 	//Update Entity Manager
@@ -79,10 +77,7 @@ void Application::Display(void)
 	ClearScreen();
 
 	//display octree
-	if (m_uOctantID == -1)
-		m_pRoot->Display();
-	else
-		m_pRoot->Display(m_uOctantID);
+	m_pRoot->Display();
 	
 	//Display board
 	board->Display();
