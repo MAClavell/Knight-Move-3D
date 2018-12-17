@@ -48,6 +48,12 @@ void Application::Update(void)
 		gameOver = true;
 	}
 
+	if (!rook->IsAlive())
+	{
+		board->AddToScore(500);
+		rook->Reset();
+	}
+
 	//Is the ArcBall active?
 	ArcBall();
 
@@ -101,6 +107,7 @@ void Application::ResetGame()
 {
 	board->Reset();
 	knight->Reset();
+	rook->Reset();
 	gameOver = false;
 }
 void Application::Release(void)
