@@ -102,6 +102,7 @@ void Knight::Jump()
 	{
 		//TODO do something with collisions
 		std::cout << "colliding" << std::endl;
+		falling = 2;
 	}
 
 	//map the percentage to be between 0.0 and 1.0

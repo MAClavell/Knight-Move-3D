@@ -21,8 +21,8 @@ Rook::Rook(String fileName, String uniqueID, Board* brd, SystemSingleton* a_syst
 	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
 
 	//Initialize lerp values
-	origin = brd->GetTile(vector2(0, 0));
-	destination = brd->GetTile(vector2(1, 2));
+	origin = brd->GetTile(vector2(3, 7));
+	destination = brd->GetTile(vector2(1, 7));
 	Land(origin, false);
 
 	//Scoring
@@ -126,11 +126,11 @@ void Rook::Land(Tile* target, bool stepTile)
 	}
 
 	//Check if the heart is on this tile
-	board->HandleIfOnHeart(target->coordinate);
+	//board->HandleIfOnHeart(target->coordinate);
 
 	//Decrement target's health
-	if (stepTile)
-		target->Step();
+	/*if (stepTile)
+		target->Step();*/
 
 	//Set this tile as the new origin
 	origin = target;
