@@ -17,7 +17,7 @@ Rook::Rook(String fileName, String uniqueID, Board* brd, SystemSingleton* a_syst
 
 	//Add board and set initial position
 	board = brd;
-	gridIndex = vector2(0, 0);
+	gridIndex = vector2(3, 7);
 	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
 
 	//Initialize lerp values
@@ -161,14 +161,14 @@ void Rook::Reset()
 {
 	falling = 0;
 	combo = 0;
-	gridIndex = vector2(0, 0);
+	gridIndex = vector2(3, 7);
 
 	//Set initial position
 	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
 
 	//ReInitialize lerp values
-	origin = board->GetTile(vector2(0, 0));
-	destination = board->GetTile(vector2(1, 2));
+	origin = board->GetTile(vector2(3, 7));
+	destination = board->GetTile(vector2(1, 7));
 	Land(origin, false);
 }
 
