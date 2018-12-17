@@ -162,6 +162,7 @@ void Rook::Reset()
 	falling = 0;
 	combo = 0;
 	gridIndex = vector2(3, 7);
+	frozen = false;
 
 	//Set initial position
 	this->SetPosition(board->GetKnightPositionOnTile(gridIndex));
@@ -216,4 +217,15 @@ Tile * Simplex::Rook::ChooseMove(Tile * target)
 	}
 
 	return board->GetTile(newCoord);
+}
+
+void Simplex::Rook::Freeze(void)
+{
+	frozen = true;
+	falling = 2;
+}
+
+bool Simplex::Rook::IsFrozen(void)
+{
+	return frozen;
 }

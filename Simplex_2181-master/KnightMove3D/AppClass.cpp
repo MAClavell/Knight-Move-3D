@@ -46,9 +46,10 @@ void Application::Update(void)
 	if (!knight->IsAlive() && !gameOver)
 	{
 		gameOver = true;
+		rook->Freeze();
 	}
 
-	if (!rook->IsAlive())
+	if (!rook->IsAlive() && !rook->IsFrozen())
 	{
 		board->AddToScore(500);
 		rook->Reset();

@@ -22,6 +22,7 @@ namespace Simplex
 		String uniqueID; //uniqueID in the entity manager
 		uint entityIndex;
 		int combo;
+		bool frozen;
 
 		//LERP timing
 		SystemSingleton* system = nullptr; //Singleton of the system
@@ -87,6 +88,18 @@ namespace Simplex
 		OUTPUT: bool if the Rook is alive
 		*/
 		Tile* Rook::ChooseMove(Tile* target);
+		/*
+		USAGE: Makes the rook stop moving
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		void Rook::Freeze(void);
+		/*
+		USAGE: Returns frozen
+		ARGUMENTS: ---
+		OUTPUT: ---
+		*/
+		bool Rook::IsFrozen(void);
 	};
 
 }
