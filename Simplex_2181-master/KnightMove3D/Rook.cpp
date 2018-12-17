@@ -12,7 +12,7 @@ Rook::Rook(String fileName, String uniqueID, Board* brd, SystemSingleton* a_syst
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
 	this->uniqueID = uniqueID;
-	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(true);
 	system = a_system;
 
 	//Add board and set initial position
@@ -42,8 +42,9 @@ Rook::~Rook()
 //Set the position of the Rook
 void Rook::SetPosition(vector3 newPos)
 {
-	matrix4 matrix = glm::translate(newPos) * glm::scale(vector3(0.1f, 0.08f, 0.1f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(matrix);
+	matrix4 matrix = glm::translate(newPos) * rotation;// * glm::scale(vector3(0.1f, 0.08f, 0.1f));
+	entityMngr->GetRigidBody(uniqueID)->SetModelMatrix(matrix);
+	entityMngr->SetModelMatrix(matrix, uniqueID);
 }
 
 //Makes the Rook fall downwards
@@ -79,11 +80,6 @@ void Rook::Fall()
 //Interpolates Rook from origin tile to destination tile
 void Rook::Jump()
 {
-	/*if (!speeding && fTimeBetweenStops < 5.0f)
-	{
-		fTimeBetweenStops += 0.05f;
-	}*/
-
 	static float fTimer = 0;//store the new timer
 	static uint uClock = system->GenClock(); //generate a new clock for that timer
 	float delta = system->GetDeltaTime(uClock); //get the delta time for that timer
@@ -100,20 +96,14 @@ void Rook::Jump()
 	}
 
 	//map the percentage to be between 0.0 and 1.0
-	if (!speeding) fTimer += delta * 4; //add that delta to the timer
-	else
-	{
-		fTimer += delta * 7;
-		board->AddToScore(delta * 10);
-	}
+	fTimer += delta; //add that delta to the timer
 	fPercentage = MapValue(fTimer, 0.0f, fTimeBetweenStops, 0.0f, 1.0f);
 
 	//calculate the current position
 	vector3 v3CurrentPos = glm::lerp(origin->GetKnightPosition(), destination->GetKnightPosition(), fPercentage);
 	float arc = sin(fPercentage * 3.14f);
 	v3CurrentPos.y += arc * maxHeight;
-	matrix4 m4Model = glm::translate(IDENTITY_M4, v3CurrentPos) * rotation * glm::scale(vector3(0.1f, 0.08f, 0.1f));
-	entityMngr->GetEntity(entityMngr->GetEntityIndex(uniqueID))->SetModelMatrix(m4Model);
+	SetPosition(v3CurrentPos);
 
 	//if we are done with this route
 	if (fPercentage >= 1.0f)
@@ -156,39 +146,6 @@ void Rook::Land(Tile* target, bool stepTile)
 	board->MoveEnemyReticule(destination->GetKnightPosition());
 }
 
-//Sets fTimeBetweenStops
-void Simplex::Rook::SetSpeed()
-{
-	if (!speeding) speeding = true;
-}
-
-//Changes destination of Rook's current jump
-void Simplex::Rook::ChangeMove(bool clockwise)
-{
-	if (falling > 0)
-		return;
-
-	if (clockwise)
-	{
-		destinationIndex++;
-		if (destinationIndex >= validMoves.size())
-			destinationIndex = 0;
-
-	}
-	else
-	{
-		destinationIndex--;
-		if (destinationIndex < 0)
-			destinationIndex = validMoves.size() - 1;
-
-	}
-
-	destination = validMoves[destinationIndex];
-
-	SetRotation(origin, destination);
-	board->MoveEnemyReticule(destination->GetKnightPosition());
-}
-
 //Sets rotation matrix to make Rook face correct direction
 matrix4 Simplex::Rook::SetRotation(Tile* start, Tile* end)
 {
@@ -197,11 +154,6 @@ matrix4 Simplex::Rook::SetRotation(Tile* start, Tile* end)
 	matrix4 newRotation = ToMatrix4(glm::angleAxis(angle, vector3(0.0f, 1.0f, 0.0f)));
 	rotation = newRotation;
 	return newRotation;
-}
-
-void Simplex::Rook::SlowDown()
-{
-	speeding = false;
 }
 
 //Reset the board

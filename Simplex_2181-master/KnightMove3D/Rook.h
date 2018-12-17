@@ -20,7 +20,7 @@ namespace Simplex
 		int destinationIndex = 0;
 		matrix4 rotation;
 		String uniqueID; //uniqueID in the entity manager
-		bool speeding; //true if speed up is being held down
+		uint entityIndex;
 		int combo;
 
 		//LERP timing
@@ -64,29 +64,11 @@ namespace Simplex
 		*/
 		void Land(Tile* target, bool stepTile = true);
 		/*
-		USAGE: sets fTimeBetweenStops
-		ARGUMENTS: amount of seconds to have LERP take
-		OUTPUT: ---
-		*/
-		void SetSpeed();
-		/*
-		USAGE: Changes destination of Rook's current jump
-		ARGUMENTS: true if going to the next move clockwise
-		OUTPUT: ---
-		*/
-		void ChangeMove(bool clockwise);
-		/*
 		USAGE: Sets rotation matrix to make Rook face correct direction
 		ARGUMENTS: Origin and destination tiles
 		OUTPUT: new rotation matrix
 		*/
 		matrix4 SetRotation(Tile* start, Tile* end);
-		/*
-		USAGE: Sets speeding bool to false
-		ARGUMENTS: ---
-		OUTPUT: ---
-		*/
-		void SlowDown();
 		/*
 		USAGE: Reset the Rook
 		ARGUMENTS: ---
