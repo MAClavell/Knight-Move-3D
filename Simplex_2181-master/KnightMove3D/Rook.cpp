@@ -12,7 +12,7 @@ Rook::Rook(String fileName, String uniqueID, Board* brd, SystemSingleton* a_syst
 	entityMngr = EntityManager::GetInstance();
 	entityMngr->AddEntity(fileName, uniqueID);
 	this->uniqueID = uniqueID;
-	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(true);
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
 	system = a_system;
 
 	//Add board and set initial position

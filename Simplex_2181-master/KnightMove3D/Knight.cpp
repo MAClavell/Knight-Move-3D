@@ -14,7 +14,7 @@ Knight::Knight(String fileName, String uniqueID, Board* brd, uint rookEntityInde
 	this->uniqueID = uniqueID;
 	entityIndex = entityMngr->GetEntityIndex(uniqueID);
 	this->rookEntityIndex = rookEntityIndex;
-	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(true);
+	entityMngr->GetRigidBody(uniqueID)->SetVisibleOBB(false);
 	system = a_system;
 
 	//Add board and set initial position

@@ -81,8 +81,8 @@ void Application::DrawGUI(void)
 	//Game over screen
 	if (gameOver)
 	{
-		ImGui::SetNextWindowPos(ImVec2((m_pSystem->GetWindowWidth() / 2) - GO_WINDOW_WIDTH,
-				(m_pSystem->GetWindowHeight() / 2) - GO_WINDOW_HEIGHT),
+		ImGui::SetNextWindowPos(ImVec2((m_pSystem->GetWindowWidth() / 2) - (GO_WINDOW_WIDTH / 2),
+				(m_pSystem->GetWindowHeight() / 2) - (GO_WINDOW_HEIGHT / 2)),
 				ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowSize(ImVec2(GO_WINDOW_HEIGHT, GO_WINDOW_HEIGHT), ImGuiSetCond_FirstUseEver);
 		String str = m_pSystem->GetAppName() + " - GameOver";

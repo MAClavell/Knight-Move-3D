@@ -84,7 +84,7 @@ void Application::Display(void)
 	ClearScreen();
 
 	//display octree
-	m_pRoot->Display();
+	//m_pRoot->Display();
 	
 	//Display board
 	board->Display();
